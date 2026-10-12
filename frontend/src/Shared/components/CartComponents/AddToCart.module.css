@@ -1,74 +1,193 @@
+/* AddToCart.module.css — FancyFashion Quick Add */
+
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(8, 8, 10, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 5000;
-  padding: 20px;
+  padding: 16px;
+  animation: modalFadeIn 0.25s ease;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .modal {
-  width: 420px;
+  width: 440px;
   max-width: 100%;
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
+  background: #ffffff;
+  border-radius: var(--ff-radius-lg);
+  padding: 28px;
+  border: 1px solid var(--ff-border);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--font-sans);
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ff-border-subtle);
+}
+
+.kicker {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--ff-gold-dark);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.header h2 {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--ff-black);
+  margin: 0;
 }
 
 .closeBtn {
-  border: none;
-  background: transparent;
-  font-size: 22px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--ff-border);
+  background: var(--ff-surface-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  color: var(--ff-text-muted);
+  transition: all var(--ff-transition-fast);
+}
+
+.closeBtn:hover {
+  background: var(--ff-black);
+  color: #ffffff;
 }
 
 .productName {
-  margin-top: 15px;
-  font-size: 18px;
+  margin-top: 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ff-text);
 }
 
 .section {
-  margin-top: 18px;
+  margin-top: 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.section select,
-.section input {
+.section label {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ff-text-muted);
+}
+
+.select,
+.input {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #dcdcdc;
-  border-radius: 8px;
+  padding: 10px 14px;
+  border-radius: var(--ff-radius-sm);
+  border: 1px solid var(--ff-border);
+  background: var(--ff-surface-subtle);
+  font-size: 0.88rem;
+  font-family: var(--font-sans);
+  color: var(--ff-text);
+  outline: none;
+}
+
+.select:focus,
+.input:focus {
+  border-color: var(--ff-black);
+  background: #ffffff;
 }
 
 .error {
-  color: red;
+  color: var(--ff-danger);
+  font-size: 0.8rem;
   margin-top: 10px;
-  font-size: 14px;
 }
 
 .addBtn {
-  margin-top: 20px;
   width: 100%;
+  margin-top: 24px;
+  padding: 14px;
+  background: var(--ff-black);
+  color: #ffffff;
   border: none;
-  background: #111827;
-  color: white;
-  padding: 12px;
-  border-radius: 10px;
+  border-radius: var(--ff-radius-sm);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   cursor: pointer;
-  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all var(--ff-transition);
+}
+
+.addBtn:hover:not(:disabled) {
+  background: var(--ff-gold);
+  color: var(--ff-black);
 }
 
 .addBtn:disabled {
   opacity: 0.6;
-  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    padding: 20px 16px 28px;
+    box-sizing: border-box;
+  }
+
+  .addBtn {
+    width: 100%;
+    padding: 14px 24px;
+    min-height: 48px;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 360px) {
+  .modal {
+    padding: 16px 12px 24px;
+  }
 }

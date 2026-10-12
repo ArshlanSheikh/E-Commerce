@@ -1,14 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap");
-
-* {
-  box-sizing: border-box;
-}
+/* Footer.module.css — FancyFashion Luxury Footer */
 
 .footer {
-  background: #14141a;
-  color: #d9d6cc;
+  background: #0d0d12;
+  color: #dfdbd2;
   position: relative;
   margin-top: 80px;
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
 }
 
 .topLine {
@@ -16,7 +13,7 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(184, 134, 47, 0.5) 50%,
+    rgba(197, 160, 89, 0.6) 50%,
     transparent 100%
   );
 }
@@ -24,34 +21,57 @@
 /* ---------------- MAIN GRID ---------------- */
 
 .container {
-  max-width: 1240px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 64px 48px 48px;
-
+  padding: 72px 40px 48px;
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
-  gap: 40px;
+  grid-template-columns: 1.7fr 1fr 1fr 1.5fr;
+  gap: 48px;
 }
 
 /* BRAND */
 
-.brand h2 {
-  font-family: "Fraunces", serif;
+.brandLogoRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.brandMark {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #181820;
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brandMark span {
+  font-family: var(--font-serif, "Cormorant Garamond", serif);
+  color: var(--ff-gold, #c5a059);
+  font-size: 1.15rem;
   font-weight: 700;
-  font-size: 1.7rem;
-  letter-spacing: 0.02em;
+}
+
+.brand h2 {
+  font-family: var(--font-display, "Outfit", sans-serif);
+  font-weight: 800;
+  font-size: 1.45rem;
+  letter-spacing: 2.2px;
   color: #ffffff;
-  margin: 0 0 14px;
+  margin: 0;
 }
 
 .brand p {
-  font-family: "Manrope", sans-serif;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 400;
   line-height: 1.7;
-  color: #a6a39a;
-  max-width: 300px;
-  margin: 0 0 22px;
+  color: #9f9da6;
+  max-width: 320px;
+  margin: 0 0 24px;
 }
 
 .socialIcons {
@@ -60,272 +80,305 @@
 }
 
 .socialIcons a {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-
+  border: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
-
-  color: #d9d6cc;
-  font-size: 0.9rem;
+  color: #d1ced6;
+  font-size: 0.95rem;
   text-decoration: none;
-
   transition: all 0.25s ease;
 }
 
 .socialIcons a:hover {
-  background: #b8862f;
-  border-color: #b8862f;
-  color: #14141a;
+  background: var(--ff-gold, #c5a059);
+  border-color: var(--ff-gold, #c5a059);
+  color: #0b0b0e;
   transform: translateY(-3px);
 }
 
 /* LINK COLUMNS */
 
 .links h3 {
-  font-family: "Manrope", sans-serif;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
-  letter-spacing: 1.4px;
+  letter-spacing: 1.8px;
   text-transform: uppercase;
   color: #ffffff;
-  margin: 0 0 20px;
+  margin: 0 0 22px;
 }
 
 .links {
   display: flex;
   flex-direction: column;
+  gap: 12px;
 }
 
 .links a {
-  font-family: "Manrope", sans-serif;
+  color: #9f9da6;
+  text-decoration: none;
   font-size: 13.5px;
   font-weight: 500;
-  color: #a6a39a;
-  text-decoration: none;
-  margin-bottom: 14px;
+  transition: all 0.2s ease;
   width: fit-content;
-
-  position: relative;
-  transition: color 0.25s ease;
-}
-
-.links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  width: 0;
-  height: 1px;
-  background: #b8862f;
-  transition: width 0.25s ease;
 }
 
 .links a:hover {
-  color: #f0ede8;
-}
-
-.links a:hover::after {
-  width: 100%;
+  color: var(--ff-gold, #c5a059);
+  transform: translateX(4px);
 }
 
 /* NEWSLETTER */
 
 .newsletter h3 {
-  font-family: "Manrope", sans-serif;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
-  letter-spacing: 1.4px;
+  letter-spacing: 1.8px;
   text-transform: uppercase;
   color: #ffffff;
   margin: 0 0 12px;
 }
 
-.newsletter > p {
-  font-family: "Manrope", sans-serif;
+.newsletter p {
   font-size: 13px;
-  color: #a6a39a;
+  color: #9f9da6;
   line-height: 1.6;
-  margin: 0 0 18px;
-  max-width: 280px;
+  margin-bottom: 20px;
 }
 
 .inputBox {
   display: flex;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 4px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.03);
+  align-items: center;
+  background: #171720;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 4px 5px 4px 18px;
+  transition: all 0.2s ease;
+}
+
+.inputBox:focus-within {
+  border-color: var(--ff-gold, #c5a059);
+  box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.15);
 }
 
 .inputBox input {
   flex: 1;
-  min-width: 0;
-  padding: 12px 14px;
-  border: none;
   background: transparent;
-  color: #f0ede8;
-  font-family: "Manrope", sans-serif;
-  font-size: 13px;
+  border: none;
   outline: none;
+  color: #ffffff;
+  font-size: 13.5px;
 }
 
 .inputBox input::placeholder {
-  color: #6f6d68;
+  color: #6d6b75;
 }
 
 .inputBox button {
   display: flex;
   align-items: center;
   gap: 6px;
+  background: var(--ff-gold, #c5a059);
+  color: #0b0b0e;
   border: none;
-  padding: 0 18px;
-  background: #b8862f;
-  color: #14141a;
-  font-family: "Manrope", sans-serif;
-  font-size: 12.5px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.25s ease;
-  white-space: nowrap;
+  transition: all 0.2s ease;
 }
 
 .inputBox button:hover {
-  background: #d4a85c;
-}
-
-.inputBox button svg {
-  font-size: 0.85rem;
+  background: var(--ff-gold-light, #dfba73);
+  transform: scale(1.03);
 }
 
 .subscribeMsg {
-  margin: 10px 0 0;
-  font-family: "Manrope", sans-serif;
   font-size: 12px;
-  font-weight: 600;
-  color: #7fd99a;
-
-  height: 0;
+  color: var(--ff-gold, #c5a059);
+  margin-top: 10px;
   opacity: 0;
-  overflow: hidden;
-  transition: opacity 0.3s ease, height 0.3s ease;
+  transform: translateY(4px);
+  transition: all 0.25s ease;
 }
 
 .subscribeMsgShow {
-  height: 18px;
   opacity: 1;
+  transform: translateY(0);
 }
 
 /* ---------------- BOTTOM BAR ---------------- */
 
 .bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  max-width: 1240px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 20px 48px;
-
+  padding: 24px 40px 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-}
-
-.bottom p {
-  font-family: "Manrope", sans-serif;
-  font-size: 12px;
-  color: #7a776f;
-  margin: 0;
-  white-space: nowrap;
+  font-size: 12.5px;
+  color: #7b7983;
 }
 
 .bottomLinks {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
 }
 
 .bottomLinks a {
-  font-family: "Manrope", sans-serif;
-  font-size: 12px;
-  color: #a6a39a;
+  color: #7b7983;
   text-decoration: none;
-  transition: color 0.25s ease;
+  transition: color 0.2s ease;
 }
 
 .bottomLinks a:hover {
-  color: #b8862f;
+  color: var(--ff-gold, #c5a059);
 }
 
 .dot {
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background: #4a4841;
+  background: #504e57;
 }
 
 .toTop {
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: transparent;
-  color: #d9d6cc;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #15151c;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  flex-shrink: 0;
+  font-size: 1rem;
   transition: all 0.25s ease;
 }
 
 .toTop:hover {
-  background: #b8862f;
-  border-color: #b8862f;
-  color: #14141a;
-  transform: translateY(-2px);
+  background: var(--ff-gold, #c5a059);
+  color: #0b0b0e;
+  border-color: var(--ff-gold, #c5a059);
+  transform: translateY(-3px);
 }
 
 /* ---------------- RESPONSIVE ---------------- */
 
-@media (max-width: 1024px) {
+@media (max-width: 992px) {
   .container {
     grid-template-columns: 1fr 1fr;
-    row-gap: 40px;
-    padding: 52px 32px 40px;
+    gap: 36px;
+    padding: 56px 28px 36px;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .footer {
-    margin-top: 50px;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 48px;
   }
 
   .container {
     grid-template-columns: 1fr;
-    padding: 44px 22px 32px;
-    gap: 34px;
+    gap: 28px;
+    padding: 40px 16px 24px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .brand p {
     max-width: 100%;
   }
 
-  .newsletter > p {
-    max-width: 100%;
+  .inputBox {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 12px;
+    padding: 8px;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .inputBox input {
+    padding: 8px 10px;
+    width: 100%;
+  }
+
+  .inputBox button {
+    width: 100%;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 10px;
   }
 
   .bottom {
     flex-direction: column;
-    align-items: flex-start;
-    padding: 18px 22px 26px;
+    gap: 16px;
+    padding: 20px 16px 28px;
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
-  .toTop {
-    align-self: flex-end;
-    margin-top: -34px;
+  .bottomLinks {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 32px 16px 20px;
+    gap: 24px;
+  }
+
+  .bottom {
+    padding: 16px 16px 24px;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 24px 12px 18px;
+    gap: 20px;
+  }
+
+  .brand h2 {
+    font-size: 1.25rem;
+  }
+
+  .brand p {
+    font-size: 12.5px;
+  }
+
+  .socialIcons a {
+    width: 34px;
+    height: 34px;
+    font-size: 0.85rem;
+  }
+
+  .bottom {
+    padding: 14px 12px 20px;
+    font-size: 11.5px;
+  }
+
+  .bottomLinks {
+    gap: 10px;
+    font-size: 11px;
   }
 }

@@ -33,11 +33,16 @@ const Footer = () => {
       <div className={styles.container}>
         {/* Brand */}
         <div className={styles.brand}>
-          <h2>Apna Mens Wear</h2>
+          <div className={styles.brandLogoRow}>
+            <div className={styles.brandMark}>
+              <span>FF</span>
+            </div>
+            <h2>FancyFashion</h2>
+          </div>
 
           <p>
-            Premium men&apos;s fashion designed for modern lifestyles.
-            Quality clothing with timeless style.
+            Bespoke contemporary menswear designed for the modern gentleman. 
+            Impeccable tailoring, luxurious fabrics, and timeless aesthetics.
           </p>
 
           <div className={styles.socialIcons}>
@@ -58,32 +63,32 @@ const Footer = () => {
 
         {/* Shop Links */}
         <div className={styles.links}>
-          <h3>Shop</h3>
+          <h3>Collections</h3>
           <a href="#">New Arrivals</a>
-          <a href="#">T-Shirts</a>
-          <a href="#">Jackets</a>
-          <a href="#">Accessories</a>
+          <a href="#">Luxury Shirts</a>
+          <a href="#">Tailored Blazers</a>
+          <a href="#">Denim & Trousers</a>
         </div>
 
         {/* Company Links */}
         <div className={styles.links}>
-          <h3>Company</h3>
-          <a href="#">About Us</a>
-          <a href="#">Contact</a>
+          <h3>Maison</h3>
+          <a href="/about">About Us</a>
+          <a href="/contact">Client Care</a>
           <a href="#">Privacy Policy</a>
-          <a href="#">Terms</a>
+          <a href="#">Terms of Service</a>
         </div>
 
         {/* Newsletter */}
         <div className={styles.newsletter}>
-          <h3>Join Our Newsletter</h3>
+          <h3>Private Client Newsletter</h3>
 
-          <p>Get updates about new collections and offers.</p>
+          <p>Receive exclusive early access to runway drops and seasonal promotions.</p>
 
           <form className={styles.inputBox} onSubmit={handleSubscribe}>
             <input
               type="email"
-              placeholder="Your email"
+              placeholder="Enter your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -96,14 +101,14 @@ const Footer = () => {
           </form>
 
           <p className={`${styles.subscribeMsg} ${subscribed ? styles.subscribeMsgShow : ""}`}>
-            You&apos;re on the list — welcome to MENOVA.
+            You&apos;re on the list — welcome to FancyFashion.
           </p>
         </div>
       </div>
 
       {/* Bottom Bar */}
       <div className={styles.bottom}>
-        <p>&copy; {new Date().getFullYear()} MENOVA. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} FancyFashion. All rights reserved.</p>
 
         <div className={styles.bottomLinks}>
           <a href="#">Privacy Policy</a>

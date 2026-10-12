@@ -4,6 +4,8 @@ import compression from "compression";
 import cors from "cors";
 import AllRoutes from "./modules/index.js";
 
+
+
 const app = express();
 
 app.use(express.json());
@@ -61,5 +63,8 @@ app.use("/", (req, res) => {
     error: null,
   });
 });
+
+
+
 
 export default app;

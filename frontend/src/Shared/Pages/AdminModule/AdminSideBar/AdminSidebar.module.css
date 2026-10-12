@@ -1,57 +1,140 @@
-.sidebar {
-  width: 260px;
-  height: calc(100vh - 70px);
+/* AdminSidebar.module.css — FancyFashion Atelier Admin Sidebar */
 
+.sidebar {
+  width: 270px;
+  height: calc(100vh - 72px);
   position: fixed;
   left: 0;
-  top: 70px;
-
-  background: #1f2937;
-  color: white;
-
-  padding: 20px;
-
+  top: 72px;
+  background: #0d0d12;
+  color: #ffffff;
+  padding: 24px 18px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-
+  justify-content: space-between;
   overflow-y: auto;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 990;
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+}
+
+.logoBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 16px;
+}
+
+.monogram {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--ff-radius-xs);
+  background: rgba(197, 160, 89, 0.15);
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  color: var(--ff-gold);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo {
-  margin-bottom: 20px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #ffffff;
+  margin: 0;
 }
 
-.sidebar button {
+.roleTag {
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--ff-gold-light);
+  display: block;
+}
+
+.navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.navItem {
   border: none;
   background: transparent;
-  color: white;
+  color: #a4a2ad;
   text-align: left;
-  padding: 12px;
-  border-radius: 8px;
+  padding: 12px 16px;
+  border-radius: 10px;
   cursor: pointer;
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: all var(--ff-transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.sidebar button:hover {
-  background: rgba(255, 255, 255, 0.1);
+.navItem:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+.navItem:active {
+  background: var(--ff-gold);
+  color: #0b0b0e;
+}
+
+.sidebarFooter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: #7b7886;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 998;
+  background: rgba(8, 8, 12, 0.65);
+  backdrop-filter: blur(6px);
+  z-index: 988;
 }
 
 @media (max-width: 768px) {
   .sidebar {
-    top: 70px;
-    left: -260px;
-    transition: 0.3s;
+    top: 72px;
+    left: -270px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 999;
   }
 
   .open {
-    left: 0;
+    transform: translateX(270px);
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    top: 64px;
+    height: calc(100vh - 64px);
+    width: 250px;
+    left: -250px;
+  }
+
+  .open {
+    transform: translateX(250px);
   }
 }

@@ -43,7 +43,7 @@ const ContactUs = () => {
 
           <div className={styles.infoCard}>
             <h3>✉️ Email Us</h3>
-            <p>support@menswear.com</p>
+            <p>concierge@fancyfashion.com</p>
           </div>
 
           <div className={styles.infoCard}>

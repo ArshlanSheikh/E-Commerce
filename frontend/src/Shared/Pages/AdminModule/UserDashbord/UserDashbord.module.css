@@ -1,20 +1,21 @@
+/* UserDashbord.module.css — FancyFashion Admin User Management */
+
 .container {
-  padding: 14px;
-  background: #f8fafc;
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
 }
 
 /* Header */
 
-.header {
-  margin-bottom: 14px;
-}
-
 .header h2 {
   margin: 0;
-  font-size: 20px;
-  font-weight: 700;
-  color: #111827;
+  font-family: var(--font-display, "Outfit", sans-serif);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #121217;
+  letter-spacing: -0.3px;
 }
 
 /* Stats */
@@ -22,53 +23,71 @@
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-bottom: 14px;
+  gap: 16px;
 }
 
 .statCard {
   background: white;
-  border-radius: 12px;
-  padding: 12px;
+  border-radius: 16px;
+  padding: 18px 20px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  gap: 14px;
+  border: 1px solid #eeece6;
+  box-shadow: 0 4px 14px -4px rgba(18, 18, 23, 0.04);
+  transition: all 0.2s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  border-color: rgba(197, 160, 89, 0.4);
 }
 
 .statCard svg {
-  font-size: 22px;
-  color: #2563eb;
+  font-size: 24px;
+  color: var(--ff-gold-dark, #987635);
+  background: rgba(197, 160, 89, 0.12);
+  padding: 10px;
+  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  box-sizing: border-box;
 }
 
 .statCard span {
   display: block;
   font-size: 11px;
-  color: #64748b;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #7b7886;
 }
 
 .statCard h3 {
-  margin: 2px 0 0;
-  font-size: 18px;
-  color: #111827;
+  margin: 4px 0 0;
+  font-family: var(--font-display, "Outfit", sans-serif);
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #121217;
 }
 
 /* Loading */
 
 .loading {
   text-align: center;
-  padding: 40px;
+  padding: 60px 20px;
   font-size: 14px;
-  color: #64748b;
+  color: #7b7886;
 }
 
 /* Desktop Table */
 
 .desktopTable {
   background: white;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eeece6;
+  box-shadow: 0 4px 20px -6px rgba(18, 18, 23, 0.04);
 }
 
 .desktopTable table {
@@ -77,60 +96,69 @@
 }
 
 .desktopTable thead {
-  background: #111827;
+  background: #141419;
   color: white;
 }
 
 .desktopTable th {
-  padding: 12px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: 14px 16px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
   text-align: left;
 }
 
 .desktopTable td {
-  padding: 10px 12px;
-  font-size: 12px;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: #3b3944;
+  border-bottom: 1px solid #f2f0eb;
+  vertical-align: middle;
 }
 
 .desktopTable tbody tr:hover {
-  background: #f8fafc;
+  background: #fbfbf9;
 }
 
-/* User */
+/* User Info */
 
 .userInfo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .userInfo img {
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   object-fit: cover;
+  border: 1px solid #e0ded6;
 }
 
 .userInfo span {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
+  color: #121217;
 }
 
 /* Status */
 
 .active,
 .inactive {
-  padding: 3px 8px;
-  border-radius: 30px;
-  font-size: 10px;
-  font-weight: 600;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .active {
   background: #dcfce7;
-  color: #166534;
+  color: #15803d;
 }
 
 .inactive {
@@ -147,70 +175,80 @@
 
 .actions button,
 .cardActions button {
-  width: 30px;
-  height: 30px;
-  border: none;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e0ded6;
   border-radius: 8px;
   cursor: pointer;
-  background: #eff6ff;
-  color: #2563eb;
+  background: #ffffff;
+  color: #141419;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.15s ease;
 }
 
 .actions button:hover,
 .cardActions button:hover {
-  opacity: 0.9;
+  background: #141419;
+  color: #ffffff;
 }
 
-.deleteBtn {
+.deleteBtn:hover {
   background: #fee2e2 !important;
   color: #dc2626 !important;
+  border-color: #fee2e2 !important;
 }
 
 /* Mobile Cards */
 
 .mobileCards {
   display: none;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .userCard {
   background: white;
-  border-radius: 12px;
-  padding: 10px;
-  margin-bottom: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  border-radius: 14px;
+  padding: 14px;
+  border: 1px solid #eeece6;
+  box-shadow: 0 4px 14px -4px rgba(18, 18, 23, 0.04);
 }
 
 .cardTop {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
 }
 
 .cardTop img {
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   object-fit: cover;
+  border: 1px solid #e0ded6;
 }
 
 .cardTop h4 {
   margin: 0;
-  font-size: 13px;
-  color: #111827;
+  font-family: var(--font-display, "Outfit", sans-serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #121217;
 }
 
 .cardTop p {
-  margin: 2px 0;
-  font-size: 11px;
-  color: #64748b;
-  word-break: break-word;
+  margin: 2px 0 0;
+  font-size: 11.5px;
+  color: #7b7886;
+  word-break: break-all;
 }
 
 .cardMeta {
-  margin-top: 8px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #f2f0eb;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -218,95 +256,111 @@
 
 .cardMeta span:first-child {
   font-size: 11px;
-  color: #374151;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--ff-gold-dark, #987635);
+  letter-spacing: 0.05em;
 }
 
 .cardActions {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   margin-top: 10px;
 }
 
-/* Tablet */
-
-@media (max-width: 992px) {
-  .statsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.cardActions button {
+  flex: 1;
+  height: 36px;
 }
 
-/* Mobile */
+/* Tablet & Mobile Breakpoints */
 
-@media (max-width: 768px) {
-  .container {
-    padding: 10px;
-  }
-
-  .header h2 {
-    font-size: 18px;
-  }
-
+@media (max-width: 900px) {
   .desktopTable {
     display: none;
   }
 
   .mobileCards {
-    display: block;
+    display: flex;
   }
 
   .statsGrid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
-
-  .statCard {
-    padding: 10px;
-    gap: 8px;
-  }
-
-  .statCard svg {
-    font-size: 18px;
-  }
-
-  .statCard span {
-    font-size: 10px;
-  }
-
-  .statCard h3 {
-    font-size: 15px;
   }
 }
 
-/* Small Mobile */
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0 16px;
+    gap: 16px;
+  }
 
-@media (max-width: 480px) {
+  .header h2 {
+    font-size: clamp(1.3rem, 5vw, 1.5rem);
+  }
+
   .statsGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .userCard {
-    padding: 8px;
-  }
-
-  .cardTop img {
-    width: 40px;
-    height: 40px;
-  }
-
-  .cardTop h4 {
-    font-size: 12px;
-  }
-
-  .cardTop p {
-    font-size: 10px;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
-/* =========================
-   SKELETON SHIMMER
-========================= */
+@media (max-width: 480px) {
+  .container {
+    gap: 16px;
+    padding: 0 16px;
+  }
+
+  .header h2 {
+    font-size: 1.35rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .statCard {
+    padding: 12px 14px;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .statCard svg {
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+    font-size: 20px;
+  }
+
+  .statCard h3 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 0 12px;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Skeleton */
+
 .skeletonPulse {
-  background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
+  background: linear-gradient(90deg, #f0eee8 25%, #f8f7f4 50%, #f0eee8 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s ease-in-out infinite;
 }
@@ -319,11 +373,12 @@
 
 .skeletonBlock {
   display: inline-block;
+  border-radius: 6px;
 }
 
 .skeletonRow td {
-  padding: 10px 12px;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f2f0eb;
 }
 
 @keyframes shimmer {
@@ -331,9 +386,6 @@
   100% { background-position: -200% 0; }
 }
 
-/* =========================
-   ROW / CARD FADE-IN (staggered reveal)
-========================= */
 .animatedRow {
   opacity: 0;
   animation: rowFadeIn 0.35s ease forwards;

@@ -1,82 +1,91 @@
-/* SignupLogin.module.css */
+/* SignupLogin.module.css — FancyFashion Auth Modal */
 
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 15, 20, 0.65);
-  backdrop-filter: blur(6px);
+  background: rgba(10, 10, 14, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 5500;
   padding: 20px;
-  animation: fadeIn 0.25s ease;
+  animation: authFadeIn 0.25s ease;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+@keyframes authFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .modal {
   position: relative;
   width: 100%;
-  max-width: 920px;
-  max-height: 92vh;
+  max-width: 960px;
+  max-height: 90vh;
   overflow-y: auto;
   background: #ffffff;
   border-radius: 20px;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
-  animation: slideUp 0.3s ease;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+  border: 1px solid #eeece6;
+  animation: authSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
 }
 
-@keyframes slideUp {
+@keyframes authSlideUp {
   from {
-    transform: translateY(24px);
+    transform: translateY(20px) scale(0.98);
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     opacity: 1;
   }
+}
+
+.modal::-webkit-scrollbar {
+  width: 5px;
+}
+
+.modal::-webkit-scrollbar-thumb {
+  background: #d6d3cb;
+  border-radius: 999px;
 }
 
 .close {
   position: absolute;
   top: 16px;
   right: 16px;
-  z-index: 5;
-  width: 38px;
-  height: 38px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  border: none;
+  border: 1px solid #e0ded6;
   background: rgba(255, 255, 255, 0.9);
-  color: #111;
+  color: #121217;
   cursor: pointer;
-  transition:
-    background 0.2s,
-    transform 0.2s;
+  transition: all 0.2s ease;
 }
 
 .close:hover {
-  background: #fff;
+  background: #121217;
+  color: #ffffff;
   transform: rotate(90deg);
 }
 
-/* ---------------- Left image panel ---------------- */
+/* ---------------- LEFT IMAGE PANEL ---------------- */
 
 .imageBox {
   position: relative;
-  display: none;
+  overflow: hidden;
+  display: block;
+  background: #0f0f14;
 }
 
 .imageBox img {
@@ -84,6 +93,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  filter: brightness(0.9);
 }
 
 .imageOverlay {
@@ -91,109 +101,138 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.1) 0%,
-    rgba(0, 0, 0, 0.75) 100%
+    rgba(10, 10, 14, 0.2) 0%,
+    rgba(10, 10, 14, 0.85) 100%
   );
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 32px;
-  color: #fff;
+  padding: 36px;
+  color: #ffffff;
+}
+
+.imageMonogram {
+  font-family: var(--font-display, "Outfit", sans-serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--ff-gold, #c5a059);
+  margin-bottom: 8px;
+  display: block;
 }
 
 .imageOverlay h2 {
-  font-size: 26px;
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 2.2rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin: 0 0 6px;
+  color: #ffffff;
+}
+
+.editorialQuote {
+  font-size: 13.5px !important;
+  color: #e5e3db !important;
+  line-height: 1.5;
+  font-style: italic;
+  font-family: var(--font-serif, Georgia, serif);
+  margin: 0 0 16px !important;
+  text-transform: none !important;
+  font-weight: 400 !important;
+}
+
+.vipBenefitsList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 14px;
+}
+
+.vipBenefitsList span {
+  font-family: var(--font-display, sans-serif);
+  font-size: 0.68rem;
   font-weight: 700;
-  margin-bottom: 6px;
+  letter-spacing: 0.1em;
+  color: var(--ff-gold-light, #dfba73);
+  text-transform: uppercase;
 }
 
-.imageOverlay p {
-  font-size: 14px;
-  opacity: 0.85;
-}
-
-@media (min-width: 720px) {
-  .imageBox {
-    display: block;
-  }
-}
-
-/* ---------------- Right form panel ---------------- */
+/* ---------------- FORM SECTION ---------------- */
 
 .formSection {
-  padding: 40px 32px;
+  padding: 40px 36px;
   display: flex;
   flex-direction: column;
 }
 
 .toggle {
   display: flex;
-  background: #f2f2f5;
+  background: #f4f3ef;
   border-radius: 999px;
   padding: 4px;
   margin-bottom: 24px;
-  width: fit-content;
+  max-width: 240px;
 }
 
 .toggle button {
+  flex: 1;
+  padding: 8px 16px;
+  border-radius: 999px;
   border: none;
   background: transparent;
-  padding: 8px 22px;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 14px;
-  color: #666;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #6a6874;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
 }
 
-.toggle button.active {
-  background: #111;
-  color: #fff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+.active {
+  background: #ffffff !important;
+  color: #121217 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .formSection h1 {
-  font-size: 26px;
+  font-family: var(--font-display, "Outfit", sans-serif);
+  font-size: 1.6rem;
   font-weight: 800;
-  color: #111;
-  margin-bottom: 4px;
+  color: #121217;
+  margin: 0 0 4px;
 }
 
 .subtitle {
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 24px;
+  color: #7b7886;
+  font-size: 13.5px;
+  margin: 0 0 24px;
 }
 
 .apiError {
-  background: #fdecea;
-  color: #b3261e;
-  border: 1px solid #f5c6c3;
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+  color: #b91c1c;
   padding: 10px 14px;
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 13px;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px 14px;
+  gap: 14px;
 }
 
-@media (max-width: 480px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ---------------- Fields ---------------- */
+/* ---------------- FIELDS ---------------- */
 
 .field {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  width: 100%;
 }
 
 .fieldWrapper {
@@ -204,64 +243,62 @@
 
 .fieldIcon {
   position: absolute;
-  left: 12px;
-  color: #999;
+  left: 14px;
+  color: #8c8996;
+  pointer-events: none;
   display: flex;
   align-items: center;
-  pointer-events: none;
 }
 
 .fieldInput {
   width: 100%;
-  padding: 13px 14px 13px 38px;
-  border-radius: 12px;
-  border: 1.5px solid #e2e2e6;
-  font-size: 14px;
+  height: 46px;
+  padding: 0 14px 0 42px;
+  border-radius: 10px;
+  border: 1px solid #e0ded6;
+  background: #fbfbf9;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 13.5px;
+  color: #121217;
   outline: none;
-  background: #fafafa;
-  transition:
-    border-color 0.2s,
-    background 0.2s;
+  transition: all 0.2s ease;
 }
 
 .fieldInput:focus {
-  border-color: #111;
-  background: #fff;
+  border-color: var(--ff-gold, #c5a059);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.12);
+}
+
+.inputError {
+  border-color: #ef4444 !important;
 }
 
 .fieldWrapper label {
   position: absolute;
-  left: 38px;
+  left: 42px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 14px;
-  color: #999;
+  font-size: 13px;
+  color: #8c8996;
   pointer-events: none;
-  transition: 0.2s ease all;
-  background: transparent;
-  padding: 0 4px;
+  transition: all 0.2s ease;
 }
 
-.fieldInput:focus + label,
-.fieldInput:not(:placeholder-shown) + label {
-  top: 0;
-  transform: translateY(-50%) scale(0.85);
-  color: #111;
-  background: #fff;
-  left: 30px;
+.fieldInput:focus ~ label,
+.fieldInput:not(:placeholder-shown) ~ label {
+  top: 4px;
+  transform: translateY(0);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ff-gold-dark, #987635);
+  letter-spacing: 0.5px;
 }
 
-.inputError {
-  border-color: #e04b4b !important;
+.fieldInput:focus,
+.fieldInput:not(:placeholder-shown) {
+  padding-top: 12px;
 }
-
-.errorText {
-  color: #e04b4b;
-  font-size: 12px;
-  margin-top: 2px;
-}
-
-/* ---------------- Password field ---------------- */
 
 .passwordField {
   position: relative;
@@ -270,58 +307,65 @@
 .passwordToggle {
   position: absolute;
   right: 12px;
-  top: 22px;
-  color: #999;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8c8996;
   cursor: pointer;
   display: flex;
   align-items: center;
+  padding: 4px;
 }
 
 .passwordToggle:hover {
-  color: #111;
+  color: #121217;
+}
+
+.errorText {
+  color: #ef4444;
+  font-size: 11.5px;
+  margin: 2px 0 0;
 }
 
 /* ---------------- OTP ---------------- */
 
 .otpWrapper {
-  grid-column: 1 / -1;
+  grid-column: span 2;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background: #f7f7f9;
-  border-radius: 14px;
   padding: 14px;
+  background: #fcfbf9;
+  border: 1px solid #f0eee8;
+  border-radius: 12px;
 }
 
 .otpSendBtn {
   align-self: flex-start;
-  border: none;
-  background: #111;
-  color: #fff;
-  padding: 9px 18px;
+  padding: 6px 14px;
   border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
+  border: 1px solid #141419;
+  background: #141419;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: all 0.2s ease;
 }
 
-.otpSendBtn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.otpSendBtn:hover:not(:disabled) {
+  background: var(--ff-gold, #c5a059);
+  border-color: var(--ff-gold, #c5a059);
 }
 
 .otpBtnVerified {
-  background: #1f9d55;
-}
-
-.otpBtnUnverified {
-  background: #d68b00;
+  background: #059669 !important;
+  border-color: #059669 !important;
+  cursor: default !important;
 }
 
 .otpTimer {
   font-size: 12px;
-  color: #888;
+  color: #8c8996;
 }
 
 .otpContainer {
@@ -330,60 +374,63 @@
 }
 
 .otpBox {
-  width: 42px;
-  height: 46px;
+  width: 40px;
+  height: 44px;
   text-align: center;
+  font-family: var(--font-display, sans-serif);
   font-size: 18px;
   font-weight: 700;
-  border-radius: 10px;
-  border: 1.5px solid #e2e2e6;
+  border-radius: 8px;
+  border: 1.5px solid #e0ded6;
+  background: #ffffff;
   outline: none;
-  background: #fff;
 }
 
 .otpBox:focus {
-  border-color: #111;
+  border-color: var(--ff-gold, #c5a059);
+  box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.15);
 }
 
 .otpVerifyBtn {
   align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: 6px;
   border: none;
-  background: #111;
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
+  background: var(--ff-gold, #c5a059);
+  color: #0c0c10;
+  font-size: 12px;
+  font-weight: 700;
   cursor: pointer;
 }
 
-/* ---------------- Submit ---------------- */
+/* ---------------- SUBMIT & FOOTER ---------------- */
 
 .submit {
-  grid-column: 1 / -1;
   margin-top: 24px;
-  padding: 14px;
-  border: none;
+  height: 48px;
   border-radius: 12px;
-  background: #111;
-  color: #fff;
-  font-size: 15px;
+  border: none;
+  background: #121217;
+  color: #ffffff;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
   cursor: pointer;
-  transition:
-    transform 0.15s ease,
-    opacity 0.2s;
+  transition: all 0.25s ease;
 }
 
-.submit:hover {
-  transform: translateY(-1px);
+.submit:hover:not(:disabled) {
+  background: var(--ff-gold, #c5a059);
+  color: #0c0c10;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(197, 160, 89, 0.35);
 }
 
 .submit:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
-  transform: none;
 }
 
 .forgotPassword {
@@ -392,22 +439,146 @@
 }
 
 .forgotPassword a {
-  font-size: 13px;
-  color: #666;
+  font-size: 12.5px;
+  color: #7b7886;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .forgotPassword a:hover {
-  color: #111;
-  text-decoration: underline;
+  color: var(--ff-gold, #c5a059);
 }
 
-/* Scrollbar polish for the modal */
-.modal::-webkit-scrollbar {
-  width: 6px;
+/* ---------------- RESPONSIVE (320px–480px) ---------------- */
+
+@media (max-width: 768px) {
+  .overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal {
+    grid-template-columns: 1fr;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .imageBox {
+    display: none;
+  }
+
+  .close {
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .formSection {
+    padding: 24px 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .otpWrapper {
+    grid-column: span 1;
+    padding: 12px 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .otpContainer {
+    gap: 5px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .submit {
+    width: 100%;
+    height: 48px;
+    box-sizing: border-box;
+  }
 }
 
-.modal::-webkit-scrollbar-thumb {
-  background: #ddd;
-  border-radius: 10px;
+@media (max-width: 480px) {
+  .formSection {
+    padding: 20px 14px;
+  }
+
+  .formSection h1 {
+    font-size: 1.35rem;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  .fieldInput {
+    height: 44px;
+  }
+
+  .otpBox {
+    width: clamp(32px, 8.8vw, 38px);
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .submit {
+    height: 46px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 360px) {
+  .overlay {
+    padding: 4px;
+  }
+
+  .formSection {
+    padding: 18px 10px;
+  }
+
+  .formSection h1 {
+    font-size: 1.25rem;
+  }
+
+  .toggle {
+    margin-bottom: 14px;
+    max-width: 210px;
+  }
+
+  .toggle button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .fieldInput {
+    height: 42px;
+    font-size: 12.5px;
+  }
+
+  .otpContainer {
+    gap: 4px;
+  }
+
+  .otpBox {
+    width: 30px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .submit {
+    height: 42px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
 }

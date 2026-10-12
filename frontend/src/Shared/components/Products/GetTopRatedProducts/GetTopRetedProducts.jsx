@@ -1,11 +1,12 @@
-// GetTopRetedProducts.jsx
+// GetTopRetedProducts.jsx - Asymmetric Editorial Icon Archive
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import api from '../../../../Api/Axios';
 import ProductDesign from '../ProductDesign';
 import styles from './GetTopRetedProducts.module.css';
+import { FiAward, FiStar, FiArrowRight } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 const LIMIT = 10;
-const STAGGER_DELAY = 150;
 const SCROLL_THROTTLE = 300;
 const SCROLL_THRESHOLD = 200;
 
@@ -18,24 +19,16 @@ const GetTopRetedProducts = () => {
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
   const isFetchingRef = useRef(false);
   const throttleRef = useRef(null);
   const staggerTimeouts = useRef([]);
-  const fetchedPagesRef = useRef(new Set()); // Track which pages are already fetched
-  const currentPageRef = useRef(1); // Track current page without closure issues
+  const fetchedPagesRef = useRef(new Set());
+  const currentPageRef = useRef(1);
 
-  // ---------------- Fetch products ----------------
   const fetchProducts = useCallback(async (pageNum, isInitial = false) => {
-    // Check if this page is already fetched
-    if (fetchedPagesRef.current.has(pageNum)) {
-      console.log(`Page ${pageNum} already fetched, skipping...`);
-      return;
-    }
-
-    if (isFetchingRef.current) {
-      console.log('Already fetching, skipping...');
-      return;
-    }
+    if (fetchedPagesRef.current.has(pageNum)) return;
+    if (isFetchingRef.current) return;
 
     isFetchingRef.current = true;
     fetchedPagesRef.current.add(pageNum);
@@ -50,14 +43,12 @@ const GetTopRetedProducts = () => {
       const raw = response?.data?.products || response?.data?.data || response?.data || [];
       const newProducts = Array.isArray(raw) ? raw : [];
 
-      // Filter out duplicates based on product _id
       setProducts(prev => {
         const existingIds = new Set(prev.map(p => p._id));
         const uniqueNewProducts = newProducts.filter(p => !existingIds.has(p._id));
         return [...prev, ...uniqueNewProducts];
       });
 
-      // Only reveal unique products
       setVisibleProducts(prev => {
         const existingIds = new Set(prev.map(p => p._id));
         const uniqueNewProducts = newProducts.filter(p => !existingIds.has(p._id));
@@ -72,9 +63,8 @@ const GetTopRetedProducts = () => {
       setError(null);
     } catch (err) {
       console.error('Error fetching top rated products:', err);
-      setError('Failed to load products. Please try again later.');
+      setError('Failed to load iconic creations. Please refresh or retry.');
       if (isInitial) setProducts([]);
-      // Remove from fetched pages if failed, so it can be retried
       fetchedPagesRef.current.delete(pageNum);
     } finally {
       isInitial ? setInitialLoading(false) : setLoadingMore(false);
@@ -82,20 +72,17 @@ const GetTopRetedProducts = () => {
     }
   }, []);
 
-  // ---------------- Initial load ----------------
   useEffect(() => {
     currentPageRef.current = 1;
     fetchProducts(1, true);
 
     return () => {
       staggerTimeouts.current.forEach(clearTimeout);
-      // Reset refs on unmount
       fetchedPagesRef.current.clear();
       isFetchingRef.current = false;
     };
   }, [fetchProducts]);
 
-  // ---------------- Throttled scroll listener for infinite load ----------------
   useEffect(() => {
     const handleScroll = () => {
       if (throttleRef.current) return;
@@ -138,94 +125,117 @@ const GetTopRetedProducts = () => {
     fetchProducts(1, true);
   };
 
-  // ---------------- Skeleton card ----------------
   const SkeletonCard = ({ delay = 0 }) => (
     <div className={styles.skeletonCard} style={{ animationDelay: `${delay}ms` }}>
       <div className={styles.skeletonImage} />
-      <div className={styles.skeletonLine} style={{ width: '80%' }} />
-      <div className={styles.skeletonLine} style={{ width: '55%' }} />
-      <div className={styles.skeletonLine} style={{ width: '40%', height: '18px', marginTop: '8px' }} />
+      <div className={styles.skeletonMeta}>
+        <div className={styles.skeletonLine} style={{ width: '35%', height: '10px' }} />
+        <div className={styles.skeletonLine} style={{ width: '80%', height: '16px' }} />
+        <div className={styles.skeletonLine} style={{ width: '50%', height: '18px', marginTop: '6px' }} />
+      </div>
     </div>
   );
 
-  // ---------------- Initial loading -> skeleton grid ----------------
-  if (initialLoading && visibleProducts.length === 0) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <h2 className={styles.title}>⭐ Featured Products</h2>
-          <p className={styles.subtitle}>Top rated products loved by our customers</p>
-        </div>
-        <div className={styles.productGrid}>
-          {Array.from({ length: LIMIT }).map((_, i) => (
-            <SkeletonCard key={i} delay={i * 60} />
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  // ---------------- Error state ----------------
-  if (error && visibleProducts.length === 0) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.error}>
-          <p>{error}</p>
-          <button onClick={handleRetry} className={styles.retryBtn}>
-            Try Again
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // ---------------- Empty state ----------------
-  if (!initialLoading && visibleProducts.length === 0) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.empty}>
-          <p>No top rated products available at the moment.</p>
-        </div>
-      </div>
-    );
-  }
+  const heroItem = visibleProducts.length > 0 ? visibleProducts[0] : null;
+  const remainingItems = visibleProducts.length > 1 ? visibleProducts.slice(1) : [];
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h2 className={styles.title}>⭐ Featured Products</h2>
-        <p className={styles.subtitle}>Top rated products loved by our customers</p>
-      </div>
-
-      <div className={styles.productGrid}>
-        {visibleProducts.map((product) => (
-          <div
-            key={product?._id || `product-${Math.random()}`}
-            className={styles.productItem}
-          >
-            <ProductDesign product={product} />
+    <section className={styles.section}>
+      <div className={styles.container}>
+        {/* EDITORIAL SECTION HEADER */}
+        <div className={styles.header}>
+          <div className={styles.headerLeft}>
+            <div className={styles.kickerRow}>
+              <span className={styles.eyebrow}>✦ THE ICON ARCHIVE</span>
+              <span className={styles.ratingBadge}>
+                <FiAward size={14} />
+                <span>TOP RATED BY CONNOISSEURS</span>
+              </span>
+            </div>
+            <h2 className={styles.title}>Bespoke Masterpieces</h2>
+            <p className={styles.subtitle}>
+              The highest-rated menswear essentials in our maison, celebrated for architectural silhouette and premium fabrication.
+            </p>
           </div>
-        ))}
 
-        {loadingMore &&
-          Array.from({ length: LIMIT }).map((_, i) => (
-            <SkeletonCard key={`loading-${i}`} delay={i * 60} />
-          ))}
-      </div>
-
-      {!hasMore && visibleProducts.length > 0 && (
-        <p className={styles.endMessage}>You've seen all our top rated products 🎉</p>
-      )}
-
-      {error && visibleProducts.length > 0 && (
-        <div className={styles.inlineError}>
-          <p>{error}</p>
-          <button onClick={handleRetry} className={styles.retryBtn}>
-            Try Again
-          </button>
+          <div className={styles.headerRight}>
+            <button
+              className={styles.viewAllBtn}
+              onClick={() => navigate('/filtered/all')}
+            >
+              <span>EXPLORE ALL ARCHIVES</span>
+              <FiArrowRight size={15} />
+            </button>
+          </div>
         </div>
-      )}
-    </div>
+
+        {/* LOADING STATE */}
+        {initialLoading && visibleProducts.length === 0 ? (
+          <div className={styles.grid}>
+            {Array.from({ length: 8 }).map((_, i) => (
+              <SkeletonCard key={i} delay={i * 60} />
+            ))}
+          </div>
+        ) : error && visibleProducts.length === 0 ? (
+          <div className={styles.errorBox}>
+            <p>{error}</p>
+            <button onClick={handleRetry} className={styles.retryBtn}>
+              Retry Connection
+            </button>
+          </div>
+        ) : visibleProducts.length === 0 ? (
+          <div className={styles.emptyBox}>
+            <p>No creations available at this moment in the archive.</p>
+          </div>
+        ) : (
+          <>
+            {/* ASYMMETRIC SPOTLIGHT + STAGGERED GRID */}
+            <div className={styles.asymmetricContainer}>
+              {/* FEATURED SPOTLIGHT CARD (FIRST ITEM) */}
+              {heroItem && (
+                <div className={styles.spotlightFeature}>
+                  <div className={styles.spotlightTagBanner}>
+                    <FiStar size={14} />
+                    <span>ARCHIVAL HIGHLIGHT // ICON NO. 01</span>
+                  </div>
+                  <ProductDesign product={heroItem} />
+                </div>
+              )}
+
+              {/* STAGGERED EDITORIAL PRODUCTS GRID */}
+              <div className={styles.staggeredGrid}>
+                {remainingItems.map((product) => (
+                  <div
+                    key={product?._id || `product-${Math.random()}`}
+                    className={styles.productCell}
+                  >
+                    <ProductDesign product={product} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {loadingMore && (
+              <div className={styles.loadingMoreGrid}>
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <SkeletonCard key={`more-${i}`} delay={i * 60} />
+                ))}
+              </div>
+            )}
+
+            {!hasMore && visibleProducts.length > 0 && (
+              <div className={styles.endMessage}>
+                <div className={styles.endLine} />
+                <span className={styles.endText}>
+                  ✦ YOU HAVE VIEWED ALL ICONIC ARCHIVES ✦
+                </span>
+                <div className={styles.endLine} />
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </section>
   );
 };
 

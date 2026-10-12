@@ -151,9 +151,9 @@ const GetRelatedProducts = ({
       <div className={styles.header}>
         <div className={styles.headerLine}></div>
         <h3 className={styles.heading}>
-          <span className={styles.headingIcon}>✦</span> You May Also Like
+          <span className={styles.headingIcon}>✦</span> Complete the Ensemble
         </h3>
-        <p className={styles.subheading}>Discover more products you'll love</p>
+        <p className={styles.subheading}>Sartorial pairings curated by our master stylists</p>
       </div>
 
       {loading && visibleProducts.length === 0 ? (

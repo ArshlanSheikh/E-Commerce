@@ -1,14 +1,14 @@
-// FilteredProduct.jsx
+// FilteredProduct.jsx - Editorial Atelier Catalog Experience
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import api from "../../../../Api/Axios";
 import { fetchCategories } from "../../../../Api/categories";
 import ProductDesign from "../ProductDesign";
 import styles from "./FilteredProduct.module.css";
-import { FiFilter, FiX, FiSearch, FiChevronDown } from "react-icons/fi";
+import { FiFilter, FiX, FiSearch, FiChevronDown, FiRotateCcw, FiSliders } from "react-icons/fi";
 
 const LIMIT = 10;
-const STAGGER_DELAY = 150;
+const STAGGER_DELAY = 120;
 
 function FilteredProducts() {
   const { category } = useParams();
@@ -44,15 +44,13 @@ function FilteredProductsPage({ category, searchQuery }) {
   const [loadingMore, setLoadingMore] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
-  const colors = ["Black", "White", "Blue", "Red", "Green", "Yellow", "Brown"];
+  const colors = ["Black", "White", "Navy", "Blue", "Charcoal", "Beige", "Olive", "Brown"];
   const sizes = ["S", "M", "L", "XL", "XXL", "XXXL"];
 
   const abortRef = useRef(null);
   const fetchingRef = useRef(false);
   const staggerTimeouts = useRef([]);
   const requestIdRef = useRef(0);
-
-  // ---------------- Infinite scroll sentinel ----------------
   const sentinelRef = useRef(null);
 
   const [categories, setCategories] = useState([]);
@@ -133,7 +131,6 @@ function FilteredProductsPage({ category, searchQuery }) {
     }
   }, []);
 
-  // Fetch the route's initial category/search filters automatically.
   useEffect(() => {
     const timeoutId = setTimeout(
       () => fetchProducts(1, appliedFiltersRef.current),
@@ -147,18 +144,15 @@ function FilteredProductsPage({ category, searchQuery }) {
     };
   }, [fetchProducts]);
 
-  // ---------------- Pagination fetch (scroll se trigger hoga) ----------------
   useEffect(() => {
     if (page === 1) return;
     fetchProducts(page, appliedFiltersRef.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   useEffect(() => {
     return () => clearStaggerTimeouts();
   }, []);
 
-  // ---------------- Infinite scroll observer ----------------
   useEffect(() => {
     const node = sentinelRef.current;
     if (!node) return;
@@ -180,7 +174,6 @@ function FilteredProductsPage({ category, searchQuery }) {
     );
 
     observer.observe(node);
-
     return () => observer.disconnect();
   }, [hasMore, loading, loadingMore]);
 
@@ -198,6 +191,7 @@ function FilteredProductsPage({ category, searchQuery }) {
     setPage(1);
     setHasMore(true);
     fetchProducts(1, appliedFiltersRef.current);
+    setShowFilters(false);
   };
 
   const clearFilters = () => {
@@ -215,29 +209,43 @@ function FilteredProductsPage({ category, searchQuery }) {
     setPage(1);
     setHasMore(true);
     fetchProducts(1, resetFilters);
+    setShowFilters(false);
   };
 
+  const activeFilterCount = Object.entries(filters).filter(([k, v]) => {
+    if (k === "sort") return v !== "newest";
+    if (k === "category") return category === "all" ? !!v : v !== category;
+    return !!v;
+  }).length;
+
   const sidebarContent = (
-    <>
-      <div className={styles.filterSection}>
-        <h4>
-          <FiSearch className={styles.sectionIcon} />
-          Search
-        </h4>
-        <input
-          type="text"
-          name="search"
-          value={filters.search}
-          placeholder="Search products..."
-          onChange={handleChange}
-          className={styles.searchInput}
-        />
+    <div className={styles.filterConsole}>
+      {/* Search Filter */}
+      <div className={styles.filterBlock}>
+        <span className={styles.blockTitle}>SEARCH ATELIER</span>
+        <div className={styles.searchWrap}>
+          <FiSearch className={styles.inputIcon} />
+          <input
+            type="text"
+            name="search"
+            value={filters.search}
+            placeholder="Search silhouettes..."
+            onChange={handleChange}
+            className={styles.filterInput}
+          />
+        </div>
       </div>
 
-      <div className={styles.filterSection}>
-        <h4>Category</h4>
-        <select name="category" value={filters.category} onChange={handleChange} className={styles.selectInput}>
-          <option value="">All Categories</option>
+      {/* Category Dropdown */}
+      <div className={styles.filterBlock}>
+        <span className={styles.blockTitle}>DEPARTMENT</span>
+        <select
+          name="category"
+          value={filters.category}
+          onChange={handleChange}
+          className={styles.filterSelect}
+        >
+          <option value="">All Departments</option>
           {categories.map((cat) => (
             <option key={cat.name} value={cat.name}>
               {cat.name}
@@ -246,8 +254,9 @@ function FilteredProductsPage({ category, searchQuery }) {
         </select>
       </div>
 
-      <div className={styles.filterSection}>
-        <h4>Price Range</h4>
+      {/* Price Range */}
+      <div className={styles.filterBlock}>
+        <span className={styles.blockTitle}>PRICE SPECTRUM (₹)</span>
         <div className={styles.priceInputs}>
           <input
             type="number"
@@ -255,188 +264,234 @@ function FilteredProductsPage({ category, searchQuery }) {
             name="minPrice"
             value={filters.minPrice}
             onChange={handleChange}
-            className={styles.priceInput}
+            className={styles.priceBox}
           />
+          <span className={styles.priceDivider}>—</span>
           <input
             type="number"
             placeholder="Max ₹"
             name="maxPrice"
             value={filters.maxPrice}
             onChange={handleChange}
-            className={styles.priceInput}
+            className={styles.priceBox}
           />
         </div>
       </div>
 
-      <div className={styles.filterSection}>
-        <h4>Colors</h4>
-        <div className={styles.optionWrap}>
-          {colors.map((color) => (
-            <button
-              key={color}
-              type="button"
-              className={`${styles.optionBtn} ${filters.color === color ? styles.active : ""}`}
-              onClick={() => updateFilter("color", filters.color === color ? "" : color)}
-            >
-              <span className={styles.colorDot} style={{ backgroundColor: color.toLowerCase() }}></span>
-              {color}
-            </button>
-          ))}
+      {/* Colors */}
+      <div className={styles.filterBlock}>
+        <span className={styles.blockTitle}>FABRIC TONE</span>
+        <div className={styles.colorPills}>
+          {colors.map((c) => {
+            const isActive = filters.color.toLowerCase() === c.toLowerCase();
+            return (
+              <button
+                key={c}
+                type="button"
+                className={`${styles.colorChip} ${isActive ? styles.chipActive : ""}`}
+                onClick={() => updateFilter("color", isActive ? "" : c)}
+              >
+                <span>{c}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      <div className={styles.filterSection}>
-        <h4>Sizes</h4>
-        <div className={styles.optionWrap}>
-          {sizes.map((size) => (
-            <button
-              key={size}
-              type="button"
-              className={`${styles.optionBtn} ${filters.size === size ? styles.active : ""}`}
-              onClick={() => updateFilter("size", filters.size === size ? "" : size)}
-            >
-              {size}
-            </button>
-          ))}
+      {/* Sizes */}
+      <div className={styles.filterBlock}>
+        <span className={styles.blockTitle}>TAILORED SIZING</span>
+        <div className={styles.sizePills}>
+          {sizes.map((s) => {
+            const isActive = filters.size === s;
+            return (
+              <button
+                key={s}
+                type="button"
+                className={`${styles.sizeChip} ${isActive ? styles.chipActive : ""}`}
+                onClick={() => updateFilter("size", isActive ? "" : s)}
+              >
+                {s}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      <div className={styles.filterSection}>
-        <h4>
-          Sort By
-          <FiChevronDown className={styles.sortIcon} />
-        </h4>
-        <select name="sort" value={filters.sort} onChange={handleChange} className={styles.selectInput}>
-          <option value="newest">Newest First</option>
-          <option value="oldest">Oldest First</option>
-          <option value="priceAsc">Price: Low → High</option>
-          <option value="priceDesc">Price: High → Low</option>
-          <option value="nameAsc">Name: A → Z</option>
-          <option value="nameDesc">Name: Z → A</option>
+      {/* Sort */}
+      <div className={styles.filterBlock}>
+        <span className={styles.blockTitle}>ORDERING</span>
+        <select
+          name="sort"
+          value={filters.sort}
+          onChange={handleChange}
+          className={styles.filterSelect}
+        >
+          <option value="newest">Latest Runway Drops</option>
+          <option value="oldest">Archive Foundation</option>
+          <option value="priceAsc">Price: Low to High</option>
+          <option value="priceDesc">Price: High to Low</option>
+          <option value="nameAsc">Alphabetical: A → Z</option>
+          <option value="nameDesc">Alphabetical: Z → A</option>
         </select>
       </div>
 
-      <div className={styles.filterActions}>
-        <button className={styles.clearBtn} onClick={clearFilters}>
-          Clear All
+      {/* Buttons */}
+      <div className={styles.filterFooterBtns}>
+        <button type="button" className={styles.applyBtn} onClick={handleApply}>
+          Apply Preferences
         </button>
-        <button className={styles.applyBtn} onClick={handleApply}>
-          Apply Filters
+        <button type="button" className={styles.resetBtn} onClick={clearFilters}>
+          <FiRotateCcw size={14} />
+          <span>Reset</span>
         </button>
       </div>
-    </>
+    </div>
   );
 
   const SkeletonCard = ({ delay = 0 }) => (
     <div className={styles.skeletonCard} style={{ animationDelay: `${delay}ms` }}>
       <div className={styles.skeletonImage} />
-      <div className={styles.skeletonLine} style={{ width: "80%" }} />
-      <div className={styles.skeletonLine} style={{ width: "55%" }} />
-      <div className={styles.skeletonLine} style={{ width: "40%", height: "18px", marginTop: "8px" }} />
+      <div className={styles.skeletonMeta}>
+        <div className={styles.skeletonLine} style={{ width: "40%", height: "10px" }} />
+        <div className={styles.skeletonLine} style={{ width: "85%", height: "16px" }} />
+        <div className={styles.skeletonLine} style={{ width: "50%", height: "18px" }} />
+      </div>
     </div>
   );
 
+  const displayCategoryTitle =
+    category === "all" || !category
+      ? "Complete Atelier Archive"
+      : `${category} Collection`;
+
   return (
-    <section className={styles.page}>
-      <div className={styles.headerBar}>
-        <button className={styles.mobileFilterBtn} onClick={() => setShowFilters(true)}>
-          <FiFilter />
-          Filters
-        </button>
-        <div className={styles.resultsCount}>
-          {!loading && visibleProducts.length > 0 && (
-            <span>{visibleProducts.length} products found</span>
-          )}
+    <section className={styles.catalogPage}>
+      {/* 1. TOP EDITORIAL BANNER */}
+      <div className={styles.editorialBanner}>
+        <div className={styles.bannerContainer}>
+          <span className={styles.bannerKicker}>✦ HAUTE MENSWEAR REPERTOIRE</span>
+          <h1 className={styles.bannerTitle}>{displayCategoryTitle}</h1>
+          <p className={styles.bannerDesc}>
+            Curated menswear pieces structured for discerning taste. Explore hand-selected cottons, fine woolens, and modern sartorial cuts.
+          </p>
+
+          <div className={styles.bannerBar}>
+            <span className={styles.resultsCount}>
+              {!loading && `${visibleProducts.length} pieces discovered`}
+            </span>
+
+            <button
+              type="button"
+              className={styles.mobileFilterToggle}
+              onClick={() => setShowFilters(true)}
+            >
+              <FiSliders size={16} />
+              <span>Filter Catalog</span>
+              {activeFilterCount > 0 && (
+                <span className={styles.filterBadgeCount}>{activeFilterCount}</span>
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className={styles.layout}>
-        <aside className={styles.sidebar}>
-          <div className={styles.sidebarHeader}>
-            <h3>Filters</h3>
-            <button className={styles.clearAllBtn} onClick={clearFilters}>
-              Clear All
-            </button>
-          </div>
-          {sidebarContent}
-        </aside>
-
-        <main className={styles.content}>
-          <div className={styles.topBar}>
-            <h2>
-              {category ? category : "All"} Products
-              <span className={styles.count}>{!loading && `(${visibleProducts.length})`}</span>
-            </h2>
-            {!loading && visibleProducts.length > 0 && (
-              <span className={styles.sortInfo}>Sorted by: {filters.sort}</span>
-            )}
-          </div>
-
-          {loading && visibleProducts.length === 0 ? (
-            <div className={styles.productGrid}>
-              {Array.from({ length: LIMIT }).map((_, i) => (
-                <SkeletonCard key={i} delay={i * 60} />
-              ))}
-            </div>
-          ) : visibleProducts.length === 0 ? (
-            <div className={styles.empty}>
-              <span className={styles.emptyIcon}>🔍</span>
-              <h3>No Products Found</h3>
-              <p>Try adjusting your filters or search terms</p>
-              <button className={styles.clearFiltersBtn} onClick={clearFilters}>
-                Clear All Filters
-              </button>
-            </div>
-          ) : (
-            <>
-              <div className={styles.productGrid}>
-                {visibleProducts.map((product, index) => (
-                  <div
-                    key={product._id}
-                    className={styles.productItem}
-                    style={{ animationDelay: `${(index % LIMIT) * 0.05}s` }}
-                  >
-                    <ProductDesign product={product} />
-                  </div>
-                ))}
-
-                {loadingMore &&
-                  Array.from({ length: LIMIT }).map((_, i) => (
-                    <SkeletonCard key={`loading-${i}`} delay={i * 60} />
-                  ))}
+      {/* 2. CATALOG BODY */}
+      <div className={styles.catalogContainer}>
+        <div className={styles.catalogLayout}>
+          {/* DESKTOP STICKY FILTER SIDEBAR */}
+          <aside className={styles.desktopSidebar}>
+            <div className={styles.sidebarHeader}>
+              <div className={styles.sidebarTitleWrap}>
+                <FiSliders size={16} />
+                <h3>Refine Catalog</h3>
               </div>
-
-              {/* Infinite scroll sentinel - jaise ye screen pe aayega, agla page auto fetch hoga */}
-              <div ref={sentinelRef} className={styles.sentinel} />
-
-              {!hasMore && visibleProducts.length > 0 && (
-                <div className={styles.endMessage}>
-                  <span className={styles.endLine}></span>
-                  <p>You've seen all products</p>
-                  <span className={styles.endLine}></span>
-                </div>
+              {activeFilterCount > 0 && (
+                <button
+                  type="button"
+                  className={styles.clearQuickBtn}
+                  onClick={clearFilters}
+                >
+                  Clear ({activeFilterCount})
+                </button>
               )}
-            </>
-          )}
-        </main>
-      </div>
-
-      {showFilters && (
-        <>
-          <div className={styles.overlay} onClick={() => setShowFilters(false)} />
-          <div className={styles.mobileSidebar}>
-            <div className={styles.mobileHeader}>
-              <h3>
-                <FiFilter className={styles.mobileFilterIcon} />
-                Filters
-              </h3>
-              <button onClick={() => setShowFilters(false)} className={styles.closeBtn}>
-                <FiX />
-              </button>
             </div>
             {sidebarContent}
+          </aside>
+
+          {/* MAIN PRODUCT GRID */}
+          <main className={styles.mainGridArea}>
+            {loading && visibleProducts.length === 0 ? (
+              <div className={styles.productGrid}>
+                {Array.from({ length: LIMIT }).map((_, i) => (
+                  <SkeletonCard key={i} delay={i * 60} />
+                ))}
+              </div>
+            ) : visibleProducts.length === 0 ? (
+              <div className={styles.emptyResults}>
+                <span className={styles.emptyIcon}>✦</span>
+                <h3>No Pieces Match Your Preferences</h3>
+                <p>Try adjusting your search query, size, or price bounds.</p>
+                <button
+                  type="button"
+                  className={styles.resetCatalogBtn}
+                  onClick={clearFilters}
+                >
+                  Reset All Filters
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className={styles.productGrid}>
+                  {visibleProducts.map((product) => (
+                    <div key={product._id} className={styles.gridCell}>
+                      <ProductDesign product={product} />
+                    </div>
+                  ))}
+
+                  {loadingMore &&
+                    Array.from({ length: LIMIT }).map((_, i) => (
+                      <SkeletonCard key={`more-${i}`} delay={i * 60} />
+                    ))}
+                </div>
+
+                <div ref={sentinelRef} className={styles.scrollSentinel} />
+
+                {!hasMore && visibleProducts.length > 0 && (
+                  <div className={styles.endArchiveBanner}>
+                    <span className={styles.endLine} />
+                    <span className={styles.endText}>
+                      ✦ YOU HAVE VIEWED ALL ARCHIVAL PIECES ✦
+                    </span>
+                    <span className={styles.endLine} />
+                  </div>
+                )}
+              </>
+            )}
+          </main>
+        </div>
+      </div>
+
+      {/* MOBILE SLIDE-UP BOTTOM SHEET */}
+      {showFilters && (
+        <div className={styles.mobileSheetOverlay} onClick={() => setShowFilters(false)}>
+          <div className={styles.mobileSheet} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.sheetHeader}>
+              <div className={styles.sheetTitle}>
+                <FiSliders size={18} />
+                <h3>Refine Collection</h3>
+              </div>
+              <button
+                type="button"
+                className={styles.sheetCloseBtn}
+                onClick={() => setShowFilters(false)}
+              >
+                <FiX size={22} />
+              </button>
+            </div>
+            <div className={styles.sheetBody}>{sidebarContent}</div>
           </div>
-        </>
+        </div>
       )}
     </section>
   );

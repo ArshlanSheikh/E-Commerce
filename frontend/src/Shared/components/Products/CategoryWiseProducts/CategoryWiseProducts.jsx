@@ -1,23 +1,22 @@
-// CategoryWiseProducts.jsx
+// CategoryWiseProducts.jsx - Editorial Department Showcase
 import React, { useEffect, useState, useRef } from "react";
 import api from "../../../../Api/Axios";
 import ProductDesign from "../ProductDesign";
 import styles from "./CategoryWiseProducts.module.css";
-
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FiArrowRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
-const STAGGER_DELAY = 150; // har product ke beech gap (ms)
+const STAGGER_DELAY = 100;
 
 const CategoryWiseProducts = ({ category, limit = 10 }) => {
-
   const navigate = useNavigate();
-  const [visibleProducts, setVisibleProducts] = useState([]); // staggered reveal
+  const trackRef = useRef(null);
+  const [visibleProducts, setVisibleProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [hasProducts, setHasProducts] = useState(true); // avoid flash of "null" before first fetch resolves
+  const [hasProducts, setHasProducts] = useState(true);
 
   const staggerTimeouts = useRef([]);
-  const requestIdRef = useRef(0); // stale fetch calls ko ignore karne ke liye
+  const requestIdRef = useRef(0);
 
   const clearStaggerTimeouts = () => {
     staggerTimeouts.current.forEach(clearTimeout);
@@ -27,7 +26,6 @@ const CategoryWiseProducts = ({ category, limit = 10 }) => {
   const revealStaggered = (batch, requestId) => {
     batch.forEach((product, i) => {
       const timeoutId = setTimeout(() => {
-        // agar iske beech mein koi naya fetch shuru ho chuka hai, to ye purana batch add na ho
         if (requestIdRef.current !== requestId) return;
         setVisibleProducts((prev) => [...prev, product]);
       }, i * STAGGER_DELAY);
@@ -36,7 +34,7 @@ const CategoryWiseProducts = ({ category, limit = 10 }) => {
   };
 
   const fetchProducts = async () => {
-    const currentRequestId = ++requestIdRef.current; // is fetch ka unique id
+    const currentRequestId = ++requestIdRef.current;
 
     try {
       setLoading(true);
@@ -47,11 +45,9 @@ const CategoryWiseProducts = ({ category, limit = 10 }) => {
         `/v1/products/category/${category}?limit=${limit}&page=1`
       );
 
-      // agar iske beech koi naya fetch shuru ho gaya (StrictMode remount / category change), to ye result discard karo
       if (requestIdRef.current !== currentRequestId) return;
 
       const fetched = response.data.data.products || [];
-
       setHasProducts(fetched.length > 0);
 
       if (fetched.length > 0) {
@@ -70,60 +66,97 @@ const CategoryWiseProducts = ({ category, limit = 10 }) => {
 
   useEffect(() => {
     fetchProducts();
-
     return () => {
-      // is effect instance ko "cancel" kar do — StrictMode ke double-invoke se bachne ke liye
       requestIdRef.current += 1;
       clearStaggerTimeouts();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
-  // ---------------- Skeleton card ----------------
+  const scrollTrack = (direction) => {
+    if (!trackRef.current) return;
+    const distance = 360;
+    trackRef.current.scrollBy({
+      left: direction * distance,
+      behavior: "smooth",
+    });
+  };
+
   const SkeletonCard = ({ delay = 0 }) => (
     <div className={styles.skeletonItem} style={{ animationDelay: `${delay}ms` }}>
       <div className={styles.skeletonImage} />
-      <div className={styles.skeletonLine} style={{ width: "80%" }} />
-      <div className={styles.skeletonLine} style={{ width: "50%" }} />
+      <div className={styles.skeletonLine} style={{ width: "70%", height: "12px", marginTop: "12px" }} />
+      <div className={styles.skeletonLine} style={{ width: "45%", height: "14px", marginTop: "6px" }} />
     </div>
   );
 
-  // ---------------- Skeleton loading state ----------------
   if (loading && visibleProducts.length === 0) {
     return (
       <section className={styles.section}>
-        <div className={styles.header}>
-          <h2 className={styles.heading}>{category}</h2>
-        </div>
-        <div className={styles.productRow}>
-          {Array.from({ length: Math.min(limit, 6) }).map((_, i) => (
-            <SkeletonCard key={i} delay={i * 60} />
-          ))}
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <div className={styles.skeletonLine} style={{ width: "160px", height: "16px" }} />
+            <div className={styles.skeletonLine} style={{ width: "240px", height: "32px", marginTop: "8px" }} />
+          </div>
+          <div className={styles.productRow}>
+            {Array.from({ length: 4 }).map((_, i) => (
+              <SkeletonCard key={i} delay={i * 80} />
+            ))}
+          </div>
         </div>
       </section>
     );
   }
 
-  // agar fetch complete ho chuka hai aur products nahi hain, to poora section hide
   if (!loading && !hasProducts) {
     return null;
   }
 
   return (
     <section className={styles.section}>
-      <div className={styles.header}>
-        <h2 className={styles.heading}>{category}</h2>
-        <h3 onClick={() => { navigate(`/filtered/${category}`); }}>
-          View All <FaArrowRight />
-        </h3>
-      </div>
-
-      <div className={styles.productRow}>
-        {visibleProducts.map((product) => (
-          <div key={product._id} className={styles.productItem}>
-            <ProductDesign product={product} />
+      <div className={styles.container}>
+        {/* EDITORIAL DEPARTMENT HEADER */}
+        <div className={styles.header}>
+          <div>
+            <span className={styles.kicker}>✦ DEPARTMENT ARCHIVE</span>
+            <h2 className={styles.heading}>{category}</h2>
           </div>
-        ))}
+
+          <div className={styles.actions}>
+            <button
+              className={styles.viewAllBtn}
+              onClick={() => navigate(`/filtered/${category}`)}
+            >
+              <span>Explore Collection</span>
+              <FiArrowRight size={15} />
+            </button>
+
+            <div className={styles.arrowControls}>
+              <button
+                className={styles.arrowBtn}
+                onClick={() => scrollTrack(-1)}
+                aria-label="Scroll left"
+              >
+                <FiChevronLeft size={18} />
+              </button>
+              <button
+                className={styles.arrowBtn}
+                onClick={() => scrollTrack(1)}
+                aria-label="Scroll right"
+              >
+                <FiChevronRight size={18} />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* HORIZONTAL TOUCH ROW */}
+        <div className={styles.productRow} ref={trackRef}>
+          {visibleProducts.map((product) => (
+            <div key={product._id} className={styles.productItem}>
+              <ProductDesign product={product} />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

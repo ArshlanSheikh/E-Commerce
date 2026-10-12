@@ -1,9 +1,22 @@
-// ViewCartProduct.jsx
+// ViewCartProduct.jsx - Editorial Haute Couture Atelier Bag Drawer
 import React, { useEffect, useState } from "react";
 import api from "../../../Api/Axios";
 import styles from "./ViewCartProduct.module.css";
 import CreateOrder from "../Order/CreateOrder";
-import { FiX, FiShoppingBag, FiTrash2, FiCreditCard, FiMinus, FiPlus, FiAlertTriangle } from "react-icons/fi";
+import { 
+  FiX, 
+  FiShoppingBag, 
+  FiTrash2, 
+  FiCreditCard, 
+  FiMinus, 
+  FiPlus, 
+  FiAlertTriangle, 
+  FiShield, 
+  FiTruck,
+  FiArrowRight
+} from "react-icons/fi";
+
+const FREE_SHIPPING_THRESHOLD = 999;
 
 const ViewCartProduct = ({ onClose }) => {
   const [cartItems, setCartItems] = useState([]);
@@ -29,16 +42,12 @@ const ViewCartProduct = ({ onClose }) => {
         setCartItems(data.data?.items || []);
       }
     } catch (error) {
-      setError(error.response?.data?.message || "Failed to fetch cart products");
+      setError(error.response?.data?.message || "Failed to fetch bag items");
     } finally {
       setLoading(false);
     }
   };
 
-  // FIX: sirf wahi items rakho jinka product data (populate) actually mila hai.
-  // Agar product delete ho gaya ho ya backend se populate na hua ho, to
-  // pehle ye crash karta tha (blank screen). Ab aise items ko safely alag
-  // karke user ko dikha dete hain ki kuch items unavailable hain.
   const validItems = cartItems.filter(
     (item) => item?.productId && typeof item.productId === "object"
   );
@@ -131,62 +140,90 @@ const ViewCartProduct = ({ onClose }) => {
     return total + (original - sale) * (item.quantity || 0);
   }, 0);
 
+  const progressToFreeShipping = Math.min(100, (totalAmount / FREE_SHIPPING_THRESHOLD) * 100);
+  const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - totalAmount);
+
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
-        <div className={styles.header}>
-          <div className={styles.headerLeft}>
-            <FiShoppingBag className={styles.headerIcon} />
-            <h2 className={styles.heading}>My Cart</h2>
-            {!loading && validItems.length > 0 && (
-              <span className={styles.itemCount}>{validItems.length} items</span>
-            )}
+    <div className={styles.drawerOverlay} onClick={onClose}>
+      <div className={styles.drawerPane} onClick={(e) => e.stopPropagation()}>
+        {/* 1. DRAWER TOP HEADER */}
+        <div className={styles.drawerHeader}>
+          <div className={styles.headerTitleWrap}>
+            <span className={styles.headerKicker}>HAUTE MENSWEAR</span>
+            <div className={styles.mainTitleRow}>
+              <h2 className={styles.heading}>Atelier Bag</h2>
+              {!loading && validItems.length > 0 && (
+                <span className={styles.countBadge}>{totalProducts} pieces</span>
+              )}
+            </div>
           </div>
-          <button className={styles.closeBtn} onClick={onClose}>
-            <FiX />
+          <button className={styles.closeBtn} onClick={onClose} aria-label="Close Bag">
+            <FiX size={22} />
           </button>
         </div>
 
-        {/* Content */}
-        {loading && (
-          <div className={styles.loading}>
-            <div className={styles.loadingSpinner}></div>
-            <p>Loading your cart...</p>
+        {/* 2. COMPLIMENTARY SHIPPING GAUGE */}
+        {!loading && validItems.length > 0 && (
+          <div className={styles.shippingGauge}>
+            <div className={styles.gaugeText}>
+              <FiTruck size={15} />
+              {remainingForFreeShipping > 0 ? (
+                <span>
+                  Add <strong>₹{remainingForFreeShipping}</strong> more for Complimentary VIP Courier
+                </span>
+              ) : (
+                <span className={styles.qualifiedText}>
+                  ✦ You qualify for Complimentary VIP Courier Delivery
+                </span>
+              )}
+            </div>
+            <div className={styles.progressBar}>
+              <div
+                className={styles.progressFill}
+                style={{ width: `${progressToFreeShipping}%` }}
+              />
+            </div>
           </div>
         )}
 
-        {error && (
-          <div className={styles.error}>
-            <span className={styles.errorIcon}>⚠️</span>
-            <p>{error}</p>
-          </div>
-        )}
+        {/* 3. CONTENT AREA */}
+        <div className={styles.drawerBody}>
+          {loading && (
+            <div className={styles.loadingState}>
+              <div className={styles.spinner} />
+              <p>Opening your atelier bag...</p>
+            </div>
+          )}
 
-        {!loading && !error && unavailableCount > 0 && (
-          <div className={styles.error}>
-            <FiAlertTriangle className={styles.errorIcon} />
-            <p>
-              {unavailableCount} item{unavailableCount > 1 ? "s" : ""} in your cart{" "}
-              {unavailableCount > 1 ? "are" : "is"} no longer available and won't be shown.
-            </p>
-          </div>
-        )}
+          {error && (
+            <div className={styles.errorState}>
+              <FiAlertTriangle size={20} />
+              <p>{error}</p>
+            </div>
+          )}
 
-        {!loading && !error && validItems.length === 0 && (
-          <div className={styles.empty}>
-            <div className={styles.emptyIcon}>🛒</div>
-            <h3>Your cart is empty</h3>
-            <p>Start shopping to add items to your cart</p>
-            <button className={styles.shopBtn} onClick={onClose}>
-              Continue Shopping
-            </button>
-          </div>
-        )}
+          {!loading && !error && unavailableCount > 0 && (
+            <div className={styles.warningState}>
+              <FiAlertTriangle size={18} />
+              <p>
+                {unavailableCount} item(s) in your bag are no longer in stock and have been archived.
+              </p>
+            </div>
+          )}
 
-        {!loading && !error && validItems.length > 0 && (
-          <>
-            <div className={styles.products}>
+          {!loading && !error && validItems.length === 0 && (
+            <div className={styles.emptyState}>
+              <div className={styles.emptyIcon}>✦</div>
+              <h3>Your Atelier Bag is Empty</h3>
+              <p>Discover our bespoke runway collections to reserve signature silhouettes.</p>
+              <button className={styles.discoverBtn} onClick={onClose}>
+                Explore Runway
+              </button>
+            </div>
+          )}
+
+          {!loading && !error && validItems.length > 0 && (
+            <div className={styles.itemList}>
               {validItems.map((item) => {
                 const product = item.productId;
                 const selectedVariant = getSelectedVariant(item);
@@ -194,144 +231,167 @@ const ViewCartProduct = ({ onClose }) => {
 
                 const price = product.salePrice ?? product.price ?? 0;
                 const originalPrice = product.price ?? price;
+                const hasDiscount = originalPrice > price;
 
                 return (
-                  <div key={item._id} className={styles.card}>
-                    <div className={styles.imageWrapper}>
+                  <div key={item._id} className={styles.bagCard}>
+                    <div className={styles.cardImageFrame}>
                       <img
                         src={product.coverImage?.url || product.coverImage || ""}
-                        alt={product.productName || "Product"}
-                        className={styles.image}
+                        alt={product.productName || "Garment"}
+                        className={styles.cardImage}
                       />
                     </div>
 
-                    <div className={styles.content}>
-                      <div className={styles.contentHeader}>
-                        <h3 className={styles.productName}>{product.productName || "Unnamed product"}</h3>
+                    <div className={styles.cardInfo}>
+                      <div className={styles.cardTop}>
+                        <span className={styles.cardBrand}>
+                          {product.brand ? product.brand.toUpperCase() : "ATELIER"}
+                        </span>
                         <button
+                          type="button"
                           className={styles.removeBtn}
                           onClick={() => setRemoveItem(item)}
+                          aria-label="Remove item"
                         >
-                          <FiTrash2 />
+                          <FiTrash2 size={15} />
                         </button>
                       </div>
 
-                      <div className={styles.variantInfo}>
-                        <span className={styles.variantTag}>
-                          Color: {selectedVariant?.color || "N/A"}
+                      <h4 className={styles.cardName}>{product.productName}</h4>
+
+                      <div className={styles.variantChips}>
+                        <span className={styles.chip}>
+                          Tone: {selectedVariant?.color || "Standard"}
                         </span>
-                        <span className={styles.variantTag}>
-                          Size: {selectedVariant?.size || "N/A"}
+                        <span className={styles.chip}>
+                          Fit: {selectedVariant?.size || "Standard"}
                         </span>
                       </div>
 
                       <div className={styles.priceRow}>
-                        <span className={styles.salePrice}>₹{price}</span>
-                        {originalPrice > price && (
-                          <span className={styles.originalPrice}>₹{originalPrice}</span>
+                        <span className={styles.currentPrice}>₹{price}</span>
+                        {hasDiscount && (
+                          <span className={styles.oldPrice}>₹{originalPrice}</span>
                         )}
-                        {originalPrice > price && (
-                          <span className={styles.discountTag}>
-                            {Math.round(((originalPrice - price) / originalPrice) * 100)}% OFF
-                          </span>
-                        )}
+                        <span className={styles.itemSubtotal}>
+                          Total: ₹{price * item.quantity}
+                        </span>
                       </div>
 
-                      <div className={styles.quantityRow}>
-                        <div className={styles.quantityControls}>
+                      <div className={styles.actionsRow}>
+                        <div className={styles.stepper}>
                           <button
-                            className={styles.qtyBtn}
+                            type="button"
+                            className={styles.stepBtn}
                             onClick={() =>
                               HandleUpdateQuantity(item.variantId, item.quantity, -1)
                             }
                             disabled={isUpdating || item.quantity <= 1}
                           >
-                            <FiMinus />
+                            <FiMinus size={13} />
                           </button>
-                          <span className={styles.qtyValue}>
-                            {isUpdating ? "..." : item.quantity}
+                          <span className={styles.qty}>
+                            {isUpdating ? "…" : item.quantity}
                           </span>
                           <button
-                            className={styles.qtyBtn}
+                            type="button"
+                            className={styles.stepBtn}
                             onClick={() =>
                               HandleUpdateQuantity(item.variantId, item.quantity, 1)
                             }
                             disabled={isUpdating}
                           >
-                            <FiPlus />
+                            <FiPlus size={13} />
                           </button>
                         </div>
-                        <span className={styles.itemTotal}>
-                          ₹{price * item.quantity}
-                        </span>
-                      </div>
 
-                      <button
-                        className={styles.buyBtn}
-                        onClick={() => HandleBuyNow(item)}
-                      >
-                        <FiCreditCard />
-                        Buy Now
-                      </button>
+                        <button
+                          type="button"
+                          className={styles.buySingleBtn}
+                          onClick={() => HandleBuyNow(item)}
+                        >
+                          Checkout Piece
+                        </button>
+                      </div>
                     </div>
                   </div>
                 );
               })}
             </div>
+          )}
+        </div>
 
-            {/* Cart Summary */}
-            <div className={styles.cartSummary}>
-              <div className={styles.summaryLeft}>
-                <div className={styles.summaryItem}>
-                  <span>Total Items</span>
-                  <strong>{totalProducts}</strong>
-                </div>
-                <div className={styles.summaryItem}>
-                  <span>Total Amount</span>
-                  <strong>₹{totalAmount}</strong>
-                </div>
-                {totalSavings > 0 && (
-                  <div className={styles.summaryItem}>
-                    <span>You Save</span>
-                    <strong className={styles.savings}>₹{totalSavings}</strong>
-                  </div>
-                )}
+        {/* 4. SUMMARY & CHECKOUT DOCK */}
+        {!loading && !error && validItems.length > 0 && (
+          <div className={styles.drawerFooter}>
+            <div className={styles.summaryBreakdown}>
+              <div className={styles.summaryRow}>
+                <span>Pieces Reserved</span>
+                <strong>{totalProducts}</strong>
               </div>
-              <button className={styles.buyAllBtn} onClick={HandleBuyAll}>
-                Buy All ({totalProducts} items)
-              </button>
+              {totalSavings > 0 && (
+                <div className={styles.summaryRow}>
+                  <span>Archival Privilege Savings</span>
+                  <strong className={styles.savingsAmount}>-₹{totalSavings}</strong>
+                </div>
+              )}
+              <div className={styles.summaryRow}>
+                <span>VIP Courier Delivery</span>
+                <strong className={styles.freeCourier}>COMPLIMENTARY</strong>
+              </div>
+              <div className={`${styles.summaryRow} ${styles.totalRow}`}>
+                <span>Total Acquisition</span>
+                <strong className={styles.grandTotal}>₹{totalAmount}</strong>
+              </div>
             </div>
-          </>
+
+            <button
+              type="button"
+              className={styles.checkoutAllBtn}
+              onClick={HandleBuyAll}
+            >
+              <span>PROCEED TO SECURE CHECKOUT</span>
+              <FiArrowRight size={17} />
+            </button>
+
+            <div className={styles.trustFooter}>
+              <FiShield size={13} />
+              <span>Encrypted Haute Checkout • 100% Authentic Luxury</span>
+            </div>
+          </div>
         )}
 
-        {/* Remove Confirmation */}
+        {/* REMOVE CONFIRMATION MODAL */}
         {removeItem && (
           <div className={styles.confirmOverlay}>
-            <div className={styles.confirmBox}>
-              <div className={styles.confirmIcon}>🗑️</div>
-              <h3>Remove Item</h3>
-              <p>Are you sure you want to remove this item from your cart?</p>
+            <div className={styles.confirmCard}>
+              <div className={styles.confirmIcon}>✦</div>
+              <h3>Release Item from Bag?</h3>
+              <p>Are you sure you wish to unreserve this tailored garment?</p>
               <div className={styles.confirmActions}>
                 <button
+                  type="button"
                   className={styles.cancelBtn}
                   onClick={() => setRemoveItem(null)}
                   disabled={removing}
                 >
-                  Cancel
+                  Keep in Bag
                 </button>
                 <button
-                  className={styles.confirmRemoveBtn}
+                  type="button"
+                  className={styles.confirmBtn}
                   onClick={() => HandleRemove(removeItem.variantId)}
                   disabled={removing}
                 >
-                  {removing ? "Removing..." : "Remove"}
+                  {removing ? "Releasing..." : "Release"}
                 </button>
               </div>
             </div>
           </div>
         )}
 
-        {/* Create Order Modal */}
+        {/* CREATE ORDER POPUP */}
         {createOrderOpen && (
           <CreateOrder
             products={orderProducts}

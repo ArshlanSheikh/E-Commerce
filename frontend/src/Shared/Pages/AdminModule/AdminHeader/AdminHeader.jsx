@@ -30,7 +30,7 @@ function AdminHeader({ toggleSidebar }) {
         <div>
           <h2 className={styles.title}>Admin Dashboard</h2>
           <p className={styles.subtitle}>
-            Welcome back, Apna Mens Wear 👋
+            Welcome back, FancyFashion Admin 👋
           </p>
         </div>
       </div>
@@ -55,12 +55,11 @@ function AdminHeader({ toggleSidebar }) {
         </button>
 
         <div className={styles.profile}>
-          <img
-            src="https://i.pinimg.com/736x/f9/6a/f0/f96af0d61f141448f81cddfa4d2775dc.jpg"
-            alt="admin"
-          />
+          <div className={styles.adminAvatar}>
+            <span>FF</span>
+          </div>
           <div>
-            <h4>Apna Mens Wear</h4>
+            <h4>FancyFashion</h4>
             <p>Administrator</p>
           </div>
           <ChevronDown size={16} />

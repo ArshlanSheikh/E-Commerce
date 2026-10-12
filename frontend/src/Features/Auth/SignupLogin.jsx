@@ -355,8 +355,16 @@ function SignupLogin({ close, initialMode = "login" }) {
             alt="Fashion"
           />
           <div className={styles.imageOverlay}>
-            <h2>Welcome to Apna</h2>
-            <p>Your style destination</p>
+            <span className={styles.imageMonogram}>✦ FF ATELIER ✦</span>
+            <h2>Maison FancyFashion</h2>
+            <p className={styles.editorialQuote}>
+              &ldquo;Elegance is not about being noticed, it is about being remembered.&rdquo;
+            </p>
+            <div className={styles.vipBenefitsList}>
+              <span>✦ Private Runway Previews</span>
+              <span>✦ Bespoke Tailoring Care</span>
+              <span>✦ Priority Concierge Dispatch</span>
+            </div>
           </div>
         </div>
 
@@ -370,7 +378,7 @@ function SignupLogin({ close, initialMode = "login" }) {
                 setErrors({});
               }}
             >
-              Login
+              Sign In
             </button>
             <button
               type="button"
@@ -380,7 +388,7 @@ function SignupLogin({ close, initialMode = "login" }) {
                 setErrors({});
               }}
             >
-              Signup
+              Join Maison
             </button>
           </div>
 

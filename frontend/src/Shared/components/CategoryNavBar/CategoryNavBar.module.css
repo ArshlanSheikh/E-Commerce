@@ -1,293 +1,463 @@
-/* CategoryNavBar.module.css - Clean & Simple */
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap");
-
-* {
-  box-sizing: border-box;
-}
+/* CategoryNavBar.module.css - Editorial Curated Departments */
 
 .section {
-  width: 100%;
-  background: #faf9f6;
-  padding: 60px 0 50px;
+  padding: 70px 0;
+  background: #ffffff;
+  border-bottom: 1px solid var(--ff-border);
 }
 
-/* ---------------- HEADING ---------------- */
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 36px;
+}
 
-.headingWrap {
-  text-align: center;
-  padding: 0 20px;
-  margin-bottom: 40px;
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 36px;
+  gap: 20px;
 }
 
 .eyebrow {
-  display: inline-block;
-  font-family: "Manrope", sans-serif;
-  font-size: 11px;
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: #b8862f;
-  margin-bottom: 12px;
-  background: rgba(184, 134, 47, 0.08);
-  padding: 4px 16px;
-  border-radius: 20px;
+  letter-spacing: 0.22em;
+  color: var(--ff-gold-dark);
+  margin-bottom: 8px;
 }
 
 .title {
-  font-family: "Fraunces", serif;
-  font-weight: 600;
-  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-  letter-spacing: -0.02em;
-  color: #16161d;
-  margin: 0 0 12px;
-}
-
-.title::after {
-  content: "";
-  display: block;
-  margin: 8px auto 0;
-  width: 40px;
-  height: 3px;
-  background: linear-gradient(90deg, #b8862f, #d4a84a);
-  border-radius: 2px;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--ff-black);
 }
 
 .subtitle {
-  font-family: "Manrope", sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: #6f6d68;
-  max-width: 520px;
-  margin: 8px auto 0;
-  line-height: 1.7;
+  font-size: 0.98rem;
+  color: var(--ff-text-secondary);
+  margin-top: 8px;
+  max-width: 580px;
 }
 
-/* ---------------- SCROLL AREA ---------------- */
+.controlsWrap {
+  display: flex;
+  gap: 10px;
+}
 
-.scrollArea {
-  position: relative;
+.navBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--ff-border);
+  background: var(--ff-surface);
+  color: var(--ff-text);
   display: flex;
   align-items: center;
-  padding: 0 8px;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--ff-transition-fast);
 }
 
-.wrapper {
+.navBtn:hover:not(:disabled) {
+  background: var(--ff-black);
+  border-color: var(--ff-black);
+  color: #ffffff;
+}
+
+.navBtnDisabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* HORIZONTAL SCROLL / BENTO DOCK */
+.scrollWrapper {
   display: flex;
-  justify-content: flex-start;
-  gap: 32px;
+  gap: 24px;
   overflow-x: auto;
-  scroll-snap-type: x proximity;
-  scroll-padding: 0 24px;
-  padding: 8px 50px 20px;
+  scroll-behavior: smooth;
   scrollbar-width: none;
-  width: 100%;
+  padding: 8px 4px 20px;
 }
 
-.wrapper::-webkit-scrollbar {
+.scrollWrapper::-webkit-scrollbar {
   display: none;
 }
 
-/* ---------------- CARD ---------------- */
+/* 1. FEATURED DEPARTMENT EXPANDED CARD */
+.featuredCard {
+  flex: 0 0 380px;
+  height: 440px;
+  position: relative;
+  border-radius: var(--ff-radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 16px 36px -8px rgba(16, 16, 21, 0.16);
+  transition: all var(--ff-transition);
+}
 
-.category {
-  min-width: 160px;
+.featuredCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 50px -10px rgba(16, 16, 21, 0.25);
+}
+
+.featuredImageWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.featuredOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(16, 16, 21, 0.15) 0%,
+    rgba(16, 16, 21, 0.35) 40%,
+    rgba(16, 16, 21, 0.92) 100%
+  );
+}
+
+.featuredMeta {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px 28px;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  scroll-snap-align: start;
+  gap: 10px;
 }
 
-.imageBox {
-  width: 200px;
-  height: 200px;
+.badgeRow {
   display: flex;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
-
-  border-radius: 0; /* Container is square - NO border-radius */
+  gap: 10px;
 }
 
-.image {
+.deptNumber {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 3px 8px;
+  border-radius: var(--ff-radius-xs);
+}
+
+.spotlightTag {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--ff-gold-light);
+}
+
+.featuredName {
+  font-family: var(--font-serif);
+  font-size: 2.1rem;
+  font-weight: 600;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.exploreLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--ff-gold-light);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* 2. SECONDARY DEPARTMENT CARDS */
+.departmentCard {
+  flex: 0 0 260px;
+  height: 440px;
+  position: relative;
+  border-radius: var(--ff-radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -6px rgba(16, 16, 21, 0.08);
+  transition: all var(--ff-transition);
+}
+
+.departmentCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -8px rgba(16, 16, 21, 0.16);
+}
+
+.cardImageWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.cardImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%; /* Image is circular */
-  transition: transform 0.3s ease;
-  border: #b8862f 1 px solid ;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.imagePlaceholder {
-  display: flex;
+.departmentCard:hover .cardImage,
+.featuredCard:hover .cardImage {
+  transform: scale(1.06);
+}
+
+.cardPlaceholder {
   width: 100%;
   height: 100%;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #b8862f;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #252525, #b8862f);
-  color: #fff;
-  font-family: "Fraunces", serif;
-  font-size: 64px;
-  text-transform: uppercase;
-}
-
-.category:hover .image {
-  transform: scale(1.05);
-}
-
-.categoryName {
-  font-family: "Manrope", sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  color: #16161d;
-  text-align: center;
-  letter-spacing: 0.01em;
-}
-
-.category:hover .categoryName {
-  color: #b8862f;
-}
-
-/* ---------------- NAV ARROWS ---------------- */
-
-.navBtn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-65%);
-  z-index: 3;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  border: none;
-  background: #ffffff;
-  color: #16161d;
+  background: var(--ff-surface-subtle);
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  font-size: 1.3rem;
-  box-shadow: 0 4px 16px rgba(22, 22, 29, 0.1);
-  transition: all 0.2s ease;
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  color: var(--ff-gold);
 }
 
-.navBtn:hover {
-  background: #16161d;
-  color: #f4f2ec;
-  transform: translateY(-65%) scale(1.05);
+.cardGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(16, 16, 21, 0.1) 0%,
+    rgba(16, 16, 21, 0.2) 50%,
+    rgba(16, 16, 21, 0.88) 100%
+  );
 }
 
-.navBtnLeft {
-  left: 2px;
+.cardMeta {
+  position: absolute;
+  inset: 0;
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #ffffff;
 }
 
-.navBtnRight {
-  right: 2px;
+.cardTopMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.navBtnHidden {
-  opacity: 0;
-  pointer-events: none;
+.deptNumberSmall {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  background: rgba(16, 16, 21, 0.6);
+  backdrop-filter: blur(8px);
+  padding: 3px 8px;
+  border-radius: var(--ff-radius-xs);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-/* ---------------- RESPONSIVE ---------------- */
+.cornerArrow {
+  opacity: 0.7;
+  transition: all var(--ff-transition-fast);
+}
 
+.departmentCard:hover .cornerArrow {
+  opacity: 1;
+  color: var(--ff-gold-light);
+  transform: translate(2px, -2px);
+}
+
+.cardName {
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: #ffffff;
+}
+
+/* RESPONSIVE */
 @media (max-width: 1024px) {
-  .navBtn {
-    width: 40px;
-    height: 40px;
-    font-size: 1.1rem;
+  .section {
+    padding: 50px 0;
   }
 
-  .wrapper {
-    gap: 28px;
+  .container {
+    padding: 0 24px;
   }
 
-  .imageBox {
-    width: 170px;
-    height: 170px;
+  .featuredCard {
+    flex: 0 0 320px;
+    height: 380px;
   }
 
-  .category {
-    min-width: 140px;
+  .departmentCard {
+    flex: 0 0 230px;
+    height: 380px;
   }
 }
 
 @media (max-width: 768px) {
   .section {
-    padding: 40px 0 30px;
+    padding: 36px 0;
+    width: 100%;
+    overflow: hidden;
   }
 
-  .headingWrap {
-    margin-bottom: 28px;
+  .container {
+    padding: 0 16px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .title {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
   }
 
   .subtitle {
-    font-size: 12.5px;
-    max-width: 340px;
+    font-size: 0.92rem;
   }
 
-  .navBtn {
+  .controlsWrap {
     display: none;
   }
 
-  .wrapper {
-    padding: 6px 18px 12px;
+  .scrollWrapper {
     gap: 16px;
-    scroll-snap-type: x mandatory;
+    padding-bottom: 12px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  .category {
-    min-width: 110px;
+  .featuredCard {
+    flex: 0 0 clamp(240px, 75vw, 280px);
+    height: 320px;
+    max-width: 85vw;
   }
 
-  .imageBox {
-    width: 100px;
-    height: 100px;
+  .departmentCard {
+    flex: 0 0 clamp(170px, 55vw, 210px);
+    height: 320px;
+    max-width: 85vw;
   }
 
-  .categoryName {
-    font-size: 11px;
+  .featuredName {
+    font-size: 1.5rem;
+  }
+
+  .cardName {
+    font-size: 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
   .section {
-    padding: 32px 0 24px;
+    padding: 28px 0;
   }
 
-  .eyebrow {
-    font-size: 10px;
-    letter-spacing: 3px;
-    padding: 3px 12px;
+  .container {
+    padding: 0 16px;
   }
 
   .title {
-    font-size: 1.4rem;
+    font-size: clamp(1.4rem, 5vw, 1.7rem);
   }
 
   .subtitle {
-    font-size: 12px;
-    max-width: 280px;
+    font-size: 0.88rem;
   }
 
-  .wrapper {
+  .scrollWrapper {
     gap: 12px;
-    padding: 4px 14px 10px;
   }
 
-  .category {
-    min-width: 90px;
+  .featuredCard {
+    flex: 0 0 clamp(210px, 70vw, 240px);
+    height: 290px;
   }
 
-  .imageBox {
-    width: 80px;
-    height: 80px;
+  .departmentCard {
+    flex: 0 0 clamp(150px, 50vw, 180px);
+    height: 290px;
   }
 
-  .categoryName {
-    font-size: 10px;
+  .featuredMeta {
+    padding: 16px 14px;
+  }
+
+  .featuredName {
+    font-size: 1.35rem;
+  }
+
+  .cardMeta {
+    padding: 14px 12px;
+  }
+
+  .cardName {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .section {
+    padding: 22px 0;
+  }
+
+  .container {
+    padding: 0 12px;
+  }
+
+  .eyebrow {
+    font-size: 0.6rem;
+  }
+
+  .title {
+    font-size: 1.35rem;
+  }
+
+  .featuredCard {
+    flex: 0 0 200px;
+    height: 260px;
+  }
+
+  .departmentCard {
+    flex: 0 0 145px;
+    height: 260px;
+  }
+
+  .featuredMeta {
+    padding: 14px 12px;
+    gap: 4px;
+  }
+
+  .featuredName {
+    font-size: 1.15rem;
+  }
+
+  .cardMeta {
+    padding: 10px 8px;
+  }
+
+  .cardName {
+    font-size: 0.95rem;
   }
 }

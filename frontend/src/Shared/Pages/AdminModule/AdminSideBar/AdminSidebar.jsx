@@ -1,4 +1,13 @@
 import styles from "./AdminSidebar.module.css";
+import { 
+  TrendingUp, 
+  Package, 
+  CreditCard, 
+  Users, 
+  Tag, 
+  Layers, 
+  ShieldCheck 
+} from "lucide-react";
 
 function AdminSidebar({
   sidebarOpen,
@@ -27,36 +36,53 @@ function AdminSidebar({
           sidebarOpen ? styles.open : ""
         }`}
       >
-        <h3 className={styles.logo}>Admin</h3>
+        <div className={styles.logoBox}>
+          <div className={styles.monogram}>FF</div>
+          <div>
+            <h3 className={styles.logo}>MAISON ATELIER</h3>
+            <span className={styles.roleTag}>EXECUTIVE CONSOLE</span>
+          </div>
+        </div>
 
-        <button onClick={() => handleClick("sales")}>
-          Sales Report
-        </button>
+        <nav className={styles.navGroup}>
+          <button onClick={() => handleClick("sales")} className={styles.navItem}>
+            <TrendingUp size={18} />
+            <span>Sales Report</span>
+          </button>
 
-        <button onClick={() => handleClick("orders")}>
-          Orders
-        </button>
+          <button onClick={() => handleClick("orders")} className={styles.navItem}>
+            <Package size={18} />
+            <span>Client Orders</span>
+          </button>
 
-        <button onClick={() => handleClick("payments")}>
-          Payments
-        </button>
+          <button onClick={() => handleClick("payments")} className={styles.navItem}>
+            <CreditCard size={18} />
+            <span>Payments & Settlement</span>
+          </button>
 
-        <button onClick={() => handleClick("users")}>
-          Users
-        </button>
+          <button onClick={() => handleClick("users")} className={styles.navItem}>
+            <Users size={18} />
+            <span>Client Profiles</span>
+          </button>
 
-        <button onClick={() => handleClick("products")}>
-          Products
-        </button>
+          <button onClick={() => handleClick("products")} className={styles.navItem}>
+            <Tag size={18} />
+            <span>Garment Catalog</span>
+          </button>
 
-        <button onClick={() => handleClick("categories")}>
-          Categories
-        </button>
+          <button onClick={() => handleClick("categories")} className={styles.navItem}>
+            <Layers size={18} />
+            <span>Departments</span>
+          </button>
+        </nav>
+
+        <div className={styles.sidebarFooter}>
+          <ShieldCheck size={16} />
+          <span>Atelier Secure Protocol</span>
+        </div>
       </aside>
     </>
   );
 }
 
 export default AdminSidebar;
-
-

@@ -1,51 +1,61 @@
-/* SalesReport.module.css */
+/* SalesReport.module.css — FancyFashion Analytics */
+
 .container {
-  padding: 20px;
-  background: #f8fafc;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 28px;
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
 }
 
 /* ================= HEADER ================= */
+
 .header h2 {
   margin: 0;
-  font-size: 22px;
-  font-weight: 700;
-  color: #111827;
+  font-family: var(--font-display, "Outfit", sans-serif);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #121217;
+  letter-spacing: -0.3px;
 }
 
 .subtitle {
   margin: 4px 0 0;
-  font-size: 13px;
-  color: #6b7280;
+  font-size: 13.5px;
+  color: #7a7886;
 }
 
 /* ================= STATS ================= */
+
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  gap: 16px;
 }
 
 .statCard {
   background: #ffffff;
-  border-radius: 14px;
-  padding: 16px;
+  border-radius: 16px;
+  padding: 20px;
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  gap: 16px;
+  border: 1px solid #eeece6;
+  box-shadow: 0 4px 16px -4px rgba(18, 18, 23, 0.04);
+  transition: all 0.25s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(197, 160, 89, 0.4);
+  box-shadow: 0 10px 24px -6px rgba(18, 18, 23, 0.08);
 }
 
 .statIcon {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: #eff6ff;
-  color: #2563eb;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(197, 160, 89, 0.12);
+  color: var(--ff-gold-dark, #987635);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,186 +64,197 @@
 
 .statCard span {
   display: block;
-  font-size: 12px;
-  color: #6b7280;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #7b7886;
 }
 
 .statCard h3 {
   margin: 6px 0 0;
-  font-size: 19px;
-  font-weight: 700;
-  color: #111827;
+  font-family: var(--font-display, "Outfit", sans-serif);
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #121217;
 }
 
 .changeTag {
-  margin: 4px 0 0;
-  font-size: 11px;
-  font-weight: 600;
+  margin: 6px 0 0;
+  font-size: 11.5px;
+  font-weight: 700;
 }
 
 .changeUp {
-  color: #16a34a;
+  color: #059669;
 }
 
 .changeDown {
   color: #dc2626;
 }
 
-/* ================= CHART CARD ================= */
+/* ================= CHART CARDS ================= */
+
 .chartCard {
   background: #ffffff;
-  border-radius: 16px;
-  padding: 20px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  border-radius: 18px;
+  padding: 24px;
+  border: 1px solid #eeece6;
+  box-shadow: 0 4px 20px -6px rgba(18, 18, 23, 0.04);
 }
 
 .chartHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
 }
 
 .chartHeader h3 {
+  margin: 0;
+  font-family: var(--font-display, "Outfit", sans-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #121217;
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 0;
-  font-size: 15px;
-  font-weight: 700;
-  color: #111827;
 }
 
 .chartHint {
   font-size: 12px;
-  color: #9ca3af;
+  color: #8c8996;
 }
 
 .monthSelect {
-  padding: 7px 12px;
+  padding: 8px 14px;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  font-size: 12.5px;
-  background: #f9fafb;
-  color: #111827;
+  border: 1px solid #e0ded6;
+  background: #fbfbf9;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 13px;
+  color: #121217;
+  outline: none;
   cursor: pointer;
 }
 
-/* ================= BAR CHART ================= */
+.monthSelect:focus {
+  border-color: var(--ff-gold, #c5a059);
+}
+
+/* BARS CHART */
+
 .chart {
   display: flex;
   align-items: flex-end;
-  gap: 10px;
+  gap: 12px;
   height: 220px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #eeece6;
   overflow-x: auto;
-  padding-bottom: 6px;
 }
 
 .chartDaily {
-  gap: 5px;
+  gap: 6px;
 }
 
 .barCol {
-  flex: 1 0 32px;
-  min-width: 32px;
+  flex: 1;
+  min-width: 26px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
+  justify-content: flex-end;
   position: relative;
   cursor: pointer;
 }
 
 .barTrack {
-  flex: 1;
   width: 100%;
+  height: calc(100% - 24px);
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 6px;
 }
 
 .bar {
-  width: 60%;
-  min-width: 8px;
-  border-radius: 5px 5px 0 0;
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  width: 70%;
+  max-width: 32px;
+  border-radius: 6px 6px 0 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .barMonth {
-  background: linear-gradient(180deg, #3b82f6, #2563eb);
+  background: linear-gradient(180deg, var(--ff-gold, #c5a059) 0%, #141419 100%);
+}
+
+.barCol:hover .barMonth {
+  background: var(--ff-gold-light, #dfba73);
+  transform: scaleY(1.02);
 }
 
 .barDay {
-  background: linear-gradient(180deg, #34d399, #059669);
-  width: 70%;
+  background: #141419;
+}
+
+.barCol:hover .barDay {
+  background: var(--ff-gold, #c5a059);
 }
 
 .barEmpty {
-  background: #e5e7eb;
-}
-
-.barCol:hover .bar {
-  opacity: 0.85;
-  transform: scaleY(1.02);
+  background: #eeece6;
 }
 
 .barLabel {
   margin-top: 8px;
   font-size: 11px;
-  color: #6b7280;
+  color: #7b7886;
+  font-weight: 600;
   white-space: nowrap;
 }
 
 .barLabelSmall {
-  margin-top: 6px;
-  font-size: 9.5px;
-  color: #9ca3af;
+  margin-top: 8px;
+  font-size: 10px;
+  color: #8c8996;
 }
 
-/* ================= TOOLTIP ================= */
+/* Tooltip */
+
 .tooltip {
   position: absolute;
-  top: -46px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #111827;
-  color: white;
+  bottom: calc(100% + 8px);
+  background: #121217;
+  color: #ffffff;
   padding: 6px 10px;
   border-radius: 8px;
   font-size: 11px;
   white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1px;
-  z-index: 5;
   pointer-events: none;
 }
 
 .tooltip strong {
-  font-size: 12px;
+  color: var(--ff-gold-light, #dfba73);
 }
 
 .tooltip span {
-  color: #d1d5db;
   font-size: 10px;
+  color: #d1ced6;
 }
 
-.tooltip::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 4px 4px 0 4px;
-  border-style: solid;
-  border-color: #111827 transparent transparent transparent;
-}
+/* ================= MONTHLY TABLE ================= */
 
-/* ================= TABLE ================= */
 .tableWrap {
   overflow-x: auto;
 }
@@ -241,67 +262,68 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 480px;
 }
 
 .table th {
+  padding: 12px 16px;
   text-align: left;
-  font-size: 11px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
-  color: #9ca3af;
-  padding: 10px 12px;
-  border-bottom: 1px solid #e5e7eb;
+  color: #7a7886;
+  border-bottom: 1px solid #eeece6;
 }
 
 .table td {
-  padding: 10px 12px;
-  font-size: 13px;
-  color: #374151;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  color: #2a2933;
+  border-bottom: 1px solid #f4f3ef;
 }
 
 .table tbody tr:hover {
-  background: #f9fafb;
+  background: #fbfbf9;
 }
 
 /* ================= EMPTY STATE ================= */
+
 .emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  color: #8c8996;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 12px;
-  padding: 60px 20px;
-  color: #9ca3af;
-  text-align: center;
 }
 
 /* ================= SKELETON ================= */
+
 .skeletonPulse {
-  background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
+  background: linear-gradient(90deg, #f0eee8 25%, #f8f7f4 50%, #f0eee8 75%);
   background-size: 200% 100%;
-  animation: shimmer 1.4s ease-in-out infinite;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.skeletonBlock {
+  border-radius: 10px;
 }
 
 .skeletonLine {
   border-radius: 4px;
-  display: block;
-}
-
-.skeletonBlock {
-  display: inline-block;
 }
 
 .skeletonChart {
   display: flex;
   align-items: flex-end;
-  gap: 10px;
-  height: 200px;
+  gap: 12px;
+  height: 180px;
 }
 
 .skeletonBar {
   flex: 1;
-  border-radius: 5px 5px 0 0;
+  border-radius: 6px 6px 0 0;
 }
 
 @keyframes shimmer {
@@ -310,7 +332,8 @@
 }
 
 /* ================= RESPONSIVE ================= */
-@media (max-width: 1024px) {
+
+@media (max-width: 1100px) {
   .statsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -318,51 +341,57 @@
 
 @media (max-width: 768px) {
   .container {
-    padding: 12px;
+    padding: 0 16px;
+    gap: 18px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .header h2 {
+    font-size: clamp(1.4rem, 5vw, 1.8rem);
   }
 
   .statsGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    width: 100%;
   }
 
   .statCard {
-    padding: 12px;
-  }
-
-  .statCard h3 {
-    font-size: 16px;
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .chartCard {
-    padding: 14px;
+    padding: 18px 14px;
+    border-radius: 14px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .chart {
     height: 180px;
+    gap: 8px;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .barLabel {
-    font-size: 10px;
+  .tableWrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
-@media (max-width: 480px) {
-  .header h2 {
-    font-size: 18px;
-  }
-
-  .statsGrid {
-    grid-template-columns: 1fr 1fr;
+@media (max-width: 360px) {
+  .container {
+    padding: 0 12px;
   }
 
   .chart {
     height: 160px;
-    gap: 6px;
-  }
-
-  .barCol {
-    flex: 1 0 22px;
-    min-width: 22px;
   }
 }

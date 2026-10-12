@@ -1,33 +1,44 @@
+/* UserDetails.module.css — FancyFashion Admin User Details Modal */
+
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(5px);
+  background: rgba(10, 10, 14, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
-  padding: 12px;
+  z-index: 5000;
+  padding: 16px;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .modal {
   width: 100%;
-  max-width: 750px;
-  max-height: 92vh;
+  max-width: 680px;
+  max-height: 90vh;
   overflow-y: auto;
   background: #ffffff;
   border-radius: 20px;
-  padding: 22px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  padding: 28px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.28);
+  border: 1px solid #eeece6;
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
 }
 
 .modal::-webkit-scrollbar {
-  width: 7px;
+  width: 5px;
 }
 
 .modal::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 20px;
+  background: #d6d3cb;
+  border-radius: 999px;
 }
 
 /* Header */
@@ -37,29 +48,35 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eeece6;
 }
 
 .header h2 {
   margin: 0;
-  font-size: 22px;
-  font-weight: 700;
-  color: #111827;
+  font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #121217;
 }
 
 .closeBtn {
-  width: 38px;
-  height: 38px;
-  border: none;
-  border-radius: 10px;
-  background: #f3f4f6;
-  color: #111827;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e0ded6;
+  border-radius: 50%;
+  background: #fbfbf9;
+  color: #121217;
   cursor: pointer;
-  font-size: 18px;
-  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
 }
 
 .closeBtn:hover {
-  background: #e5e7eb;
+  background: #141419;
+  color: #ffffff;
 }
 
 /* Profile */
@@ -69,35 +86,34 @@
   align-items: center;
   gap: 18px;
   padding: 18px;
-  border-radius: 16px;
-  background: linear-gradient(
-    135deg,
-    #f8fafc,
-    #f1f5f9
-  );
+  border-radius: 14px;
+  background: #fcfbf9;
+  border: 1px solid #eeece6;
   margin-bottom: 20px;
 }
 
 .profile img {
-  width: 95px;
-  height: 95px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid white;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  border: 3px solid white;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
 .profile h3 {
   margin: 0;
-  font-size: 22px;
-  color: #111827;
+  font-family: var(--font-display, "Outfit", sans-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #121217;
 }
 
 .profile p {
-  margin: 6px 0 0;
-  color: #6b7280;
-  font-size: 14px;
-  word-break: break-word;
+  margin: 4px 0 0;
+  color: #7b7886;
+  font-size: 13.5px;
+  word-break: break-all;
 }
 
 /* Info Grid */
@@ -105,51 +121,58 @@
 .infoGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 18px;
 }
 
 .infoGrid div {
-  background: #f8fafc;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid #eeece6;
+  border-radius: 12px;
   padding: 14px;
 }
 
 .infoGrid label {
   display: block;
-  font-size: 12px;
-  color: #6b7280;
-  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #8c8996;
+  margin-bottom: 4px;
 }
 
 .infoGrid span {
-  font-size: 14px;
-  color: #111827;
+  font-size: 13.5px;
+  color: #121217;
   font-weight: 600;
-  word-break: break-word;
+  word-break: break-all;
 }
 
 /* Address */
 
 .addressBox {
-  background: #f8fafc;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
+  background: #fcfbf9;
+  border: 1px solid #eeece6;
+  border-radius: 14px;
   padding: 18px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .addressBox h4 {
-  margin: 0 0 12px;
-  color: #111827;
-  font-size: 16px;
+  margin: 0 0 10px;
+  color: #121217;
+  font-family: var(--font-display, "Outfit", sans-serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .addressBox p {
-  margin: 5px 0;
-  color: #4b5563;
-  font-size: 14px;
+  margin: 4px 0;
+  color: #4b4955;
+  font-size: 13.5px;
   line-height: 1.5;
 }
 
@@ -158,94 +181,64 @@
 .dateBox {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  gap: 12px;
 }
 
 .dateBox div {
-  background: #f8fafc;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 14px;
+  background: #ffffff;
+  border: 1px solid #eeece6;
+  border-radius: 12px;
+  padding: 12px 14px;
 }
 
 .dateBox label {
   display: block;
-  font-size: 12px;
-  color: #6b7280;
-  margin-bottom: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #8c8996;
+  margin-bottom: 4px;
 }
 
 .dateBox span {
   display: block;
-  color: #111827;
-  font-size: 13px;
+  color: #121217;
+  font-size: 12.5px;
   font-weight: 600;
   line-height: 1.4;
 }
 
-/* Mobile */
+/* Mobile (320px–580px) */
 
-@media (max-width: 768px) {
-  .modal {
-    padding: 14px;
-    max-height: 96vh;
+@media (max-width: 680px) {
+  .overlay {
+    padding: 0;
+    align-items: flex-end;
   }
 
-  .header h2 {
-    font-size: 18px;
+  .modal {
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    padding: 20px 16px 28px;
   }
 
   .profile {
     flex-direction: column;
     text-align: center;
-    gap: 12px;
     padding: 14px;
   }
 
   .profile img {
-    width: 80px;
-    height: 80px;
-  }
-
-  .profile h3 {
-    font-size: 18px;
-  }
-
-  .profile p {
-    font-size: 12px;
+    width: 60px;
+    height: 60px;
   }
 
   .infoGrid {
     grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .infoGrid div {
-    padding: 12px;
-  }
-
-  .infoGrid span {
-    font-size: 13px;
-  }
-
-  .addressBox {
-    padding: 14px;
-  }
-
-  .addressBox p {
-    font-size: 13px;
   }
 
   .dateBox {
     grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .dateBox div {
-    padding: 12px;
-  }
-
-  .dateBox span {
-    font-size: 12px;
   }
 }

@@ -24,7 +24,7 @@
 }
 
 .eyebrow {
-  color: #a8731e !important;
+  color: var(--ff-gold-dark, #987635) !important;
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -43,10 +43,18 @@
   padding: 0 16px;
   border: 0;
   border-radius: 8px;
-  background: #202b3c;
+  background: #141419;
   color: white;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.refreshButton:hover:not(:disabled),
+.formFields button:hover:not(:disabled),
+.subCategoryForm button:hover:not(:disabled) {
+  background: var(--ff-gold, #c5a059);
+  color: #0c0c10;
 }
 
 .toggleButton {
@@ -339,10 +347,12 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  max-width: 100%;
 }
 
 .editSubCategoryForm input {
-  width: 145px;
+  width: 130px;
+  max-width: calc(100vw - 120px);
 }
 
 .subCategories .noSubCategories {
@@ -818,6 +828,48 @@
 
   .formFields {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard {
+    padding: 12px 10px;
+  }
+
+  .createForm,
+  .categoryCard {
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+
+  .header h1 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .dashboard {
+    padding: 8px 6px;
+  }
+
+  .createForm,
+  .categoryCard {
+    padding: 12px 8px;
+  }
+
+  .categoryHeading {
+    gap: 8px;
+  }
+
+  .categoryImage,
+  .categoryImagePlaceholder {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+  }
+
+  .categoryTitle {
+    font-size: 0.95rem;
   }
 }
 

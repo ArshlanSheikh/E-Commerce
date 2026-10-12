@@ -1,131 +1,205 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, EffectFade } from "swiper/modules";
+import { Autoplay, EffectFade, Pagination } from "swiper/modules";
+import { useNavigate } from "react-router-dom";
+import { FiArrowRight, FiCompass } from "react-icons/fi";
 
 import "swiper/css";
-import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+import "swiper/css/pagination";
 
 import styles from "./HeroSection.module.css";
 
 const slides = [
   {
-    title: "Premium Style For Modern Men",
-    desc: "Timeless outfits that blend confidence and comfort – for every occasion.",
-    button: "Shop Collection",
-    image:
-      "https://i.pinimg.com/736x/f9/6a/f0/f96af0d61f141448f81cddfa4d2775dc.jpg",
-    tag: "New Arrivals",
+    lookNumber: "LOOK 01",
+    season: "AUTUMN / WINTER '26",
+    title: "Sculpted Elegance & Modern Form",
+    italicAccent: "Elegance",
+    desc: "Uncompromising Italian wool blazers paired with artisanal silk shirts. Designed for the discerning modern gentleman.",
+    image: "https://i.pinimg.com/736x/f9/6a/f0/f96af0d61f141448f81cddfa4d2775dc.jpg",
+    spotlightTitle: "Double-Breasted Wool Blazer",
+    spotlightPrice: "₹4,999",
+    categoryFilter: "Blazer",
   },
   {
-    title: "Winter Collection 2026",
-    desc: "Upgrade your wardrobe with premium jackets and layered casual wear.",
-    button: "Explore Now",
-    image:
-      "https://i.pinimg.com/736x/8e/7a/aa/8e7aaa281f5c892149fcdd0eae6f9c87.jpg",
-    tag: "Seasonal Picks",
+    lookNumber: "LOOK 02",
+    season: "CAPSULE DROP '26",
+    title: "Urban Architecture in Outerwear",
+    italicAccent: "Architecture",
+    desc: "Heavyweight structured jackets and tailored shearling coats built for refined cold-weather layering.",
+    image: "https://i.pinimg.com/736x/8e/7a/aa/8e7aaa281f5c892149fcdd0eae6f9c87.jpg",
+    spotlightTitle: "Heavyweight Atelier Jacket",
+    spotlightPrice: "₹3,499",
+    categoryFilter: "Jackets",
   },
   {
-    title: "Classic Looks, Modern Fit",
-    desc: "Designed for men who value effortless style and superior craftsmanship.",
-    button: "View Products",
-    image:
-      "https://i.pinimg.com/736x/26/47/f2/2647f21911b94fd48220cf6c69c91e59.jpg"
+    lookNumber: "LOOK 03",
+    season: "BESPOKE ARCHIVE",
+    title: "Timeless Drape, Bespoke Precision",
+    italicAccent: "Precision",
+    desc: "Crisp Egyptian cotton shirts engineered with micro-tailored collars and hand-finished mother-of-pearl buttons.",
+    image: "https://i.pinimg.com/736x/26/47/f2/2647f21911b94fd48220cf6c69c91e59.jpg",
+    spotlightTitle: "Crisp Spread Collar Shirt",
+    spotlightPrice: "₹1,899",
+    categoryFilter: "Shirts",
   },
   {
-    title: "Summer Breeze Collection",
-    desc: "Lightweight fabrics and breathable designs for the perfect summer look.",
-    button: "Shop Summer",
-    image:
-      "https://i.pinimg.com/736x/0a/e6/3c/0ae63cc4d304a80e4dfa1ae75c106187.jpg",
-    tag: "Summer 2026",
+    lookNumber: "LOOK 04",
+    season: "SUMMER RESORT '26",
+    title: "Lightweight Linens for Riviera Days",
+    italicAccent: "Linens",
+    desc: "Pure breathable flax linens with fluid drape, designed for relaxed coastal sophistication.",
+    image: "https://i.pinimg.com/736x/0a/e6/3c/0ae63cc4d304a80e4dfa1ae75c106187.jpg",
+    spotlightTitle: "Relaxed Linen Camp Collar",
+    spotlightPrice: "₹1,699",
+    categoryFilter: "Shirts",
   },
   {
-    title: "Urban Streetwear",
-    desc: "Bold styles, relaxed fits – street fashion redefined for the modern man.",
-    button: "Explore Streetwear",
-    image:
-      "https://i.pinimg.com/736x/3e/ca/4c/3eca4cc358012b5c88bfc849e83485a6.jpg",
-    tag: "Street Style",
+    lookNumber: "LOOK 05",
+    season: "STREETWEAR ATELIER",
+    title: "Subversive Cuts & High-Density Cotton",
+    italicAccent: "Subversive",
+    desc: "Elevated streetwear essentials crafted from 450 GSM French terry and custom drop-shoulder silhouettes.",
+    image: "https://i.pinimg.com/736x/3e/ca/4c/3eca4cc358012b5c88bfc849e83485a6.jpg",
+    spotlightTitle: "Heavyweight Boxy Hoodie",
+    spotlightPrice: "₹2,299",
+    categoryFilter: "Hoodies",
   },
   {
-    title: "Luxury Formal Wear",
-    desc: "Exquisite tailoring and premium fabrics for the discerning gentleman.",
-    button: "View Formal",
-    image:
-      "https://i.pinimg.com/736x/1b/0d/a2/1b0da24584e1a5f918ce1b3ffca46dd7.jpg",
-    tag: "Luxury Collection",
+    lookNumber: "LOOK 06",
+    season: "EVENING BLACK TIE",
+    title: "Midnight Velvet & Silk Lapels",
+    italicAccent: "Midnight",
+    desc: "Impeccable evening suiting featuring hand-padded lapels and precision satin trims.",
+    image: "https://i.pinimg.com/736x/1b/0d/a2/1b0da24584e1a5f918ce1b3ffca46dd7.jpg",
+    spotlightTitle: "Bespoke Evening Tuxedo",
+    spotlightPrice: "₹7,999",
+    categoryFilter: "Suits",
   },
 ];
 
 const HeroSection = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const swiperRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleSlideTo = (index) => {
+    setActiveIndex(index);
+    if (swiperRef.current) {
+      swiperRef.current.slideToLoop(index);
+    }
+  };
+
+  const handleExplore = (category) => {
+    if (category) {
+      navigate(`/filtered/${category}`);
+    } else {
+      navigate("/filtered/all");
+    }
+  };
+
   return (
-    <section className={styles.hero}>
+    <section className={styles.heroSection}>
       <Swiper
-        modules={[Autoplay, Pagination, EffectFade]}
+        modules={[Autoplay, EffectFade, Pagination]}
+        effect="fade"
+        fadeEffect={{ crossFade: true }}
         autoplay={{
-          delay: 2000,
+          delay: 5500,
           disableOnInteraction: false,
         }}
-        pagination={{
-          clickable: true,
-          dynamicBullets: true,
-        }}
-        effect="fade"
-        fadeEffect={{
-          crossFade: true,
-        }}
         loop
-        className={styles.slider}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+        }}
+        onSlideChange={(swiper) => {
+          setActiveIndex(swiper.realIndex);
+        }}
+        className={styles.heroSwiper}
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
-            <div className={styles.slide}>
-              {/* Background image with overlay */}
-              <div className={styles.imageWrapper}>
-                <img
-                  src={slide.image}
-                  alt={slide.title}
-                  className={styles.bgImage}
-                />
-                <div className={styles.overlay} />
-              </div>
-
-              {/* Content */}
-              <div className={styles.content}>
-                <div className={styles.tagWrapper}>
-                  <span className={styles.tag}>{slide.tag}</span>
-                  <span className={styles.tagLine} />
+            <div className={styles.asymmetricSlide}>
+              {/* LEFT: EDITORIAL COPY PANEL */}
+              <div className={styles.editorialPane}>
+                <div className={styles.kickerRow}>
+                  <span className={styles.lookPill}>{slide.lookNumber}</span>
+                  <span className={styles.seasonTag}>{slide.season}</span>
+                  <span className={styles.atelierBadge}>✦ ATELIER SELECTION</span>
                 </div>
 
-                <h1 className={styles.title}>{slide.title}</h1>
+                <h1 className={styles.editorialTitle}>
+                  {slide.title}
+                </h1>
 
-                <p className={styles.desc}>{slide.desc}</p>
+                <p className={styles.editorialDesc}>{slide.desc}</p>
 
-                {/* <button className={styles.ctaButton}>
-                  <span>{slide.button}</span>
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                <div className={styles.ctaGroup}>
+                  <button
+                    className={styles.primaryCta}
+                    onClick={() => handleExplore(slide.categoryFilter)}
                   >
-                    <path d="M5 12h14" />
-                    <path d="M12 5l7 7-7 7" />
-                  </svg>
-                </button> */}
+                    <span>EXPLORE THIS LOOK</span>
+                    <FiArrowRight size={17} />
+                  </button>
 
-                <div className={styles.bottomIndicators}>
-                  <span className={styles.indicatorDot} />
-                  <span className={styles.indicatorText}>
-                    {String(index + 1).padStart(2, '0')} /{" "}
-                    {String(slides.length).padStart(2, '0')}
-                  </span>
-                  <span className={styles.indicatorDot} />
+                  <button
+                    className={styles.secondaryCta}
+                    onClick={() => navigate("/about")}
+                  >
+                    <span>MAISON STORY</span>
+                  </button>
+                </div>
+
+                {/* INTERACTIVE LOOK SWITCHER TILES */}
+                <div className={styles.lookNavTrack}>
+                  <span className={styles.lookNavLabel}>RUNWAY LOOKS:</span>
+                  <div className={styles.lookButtons}>
+                    {slides.map((s, idx) => (
+                      <button
+                        key={idx}
+                        className={`${styles.lookBtn} ${activeIndex === idx ? styles.lookBtnActive : ""
+                          }`}
+                        onClick={() => handleSlideTo(idx)}
+                      >
+                        {String(idx + 1).padStart(2, "0")}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* RIGHT: HIGH-FASHION PORTRAIT FRAME */}
+              <div className={styles.portraitPane}>
+                <div className={styles.portraitFrame}>
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className={styles.modelImage}
+                  />
+
+                  {/* Top-Right High Fashion Ribbon */}
+                  <div className={styles.editionTag}>
+                    {/* <FiSparkles size={13} /> */}
+                    <span>EDITION LIMITÉE // RUNWAY VOL. XXVI</span>
+                  </div>
+
+                  {/* FLOATING OVERLAPPING SPOTLIGHT CARD */}
+                  <div
+                    className={styles.floatingSpotlightCard}
+                    onClick={() => handleExplore(slide.categoryFilter)}
+                  >
+                    <div className={styles.spotlightHeader}>
+                      <span className={styles.spotlightEyebrow}>SPOTLIGHT PIECE</span>
+                      <span className={styles.spotlightPrice}>{slide.spotlightPrice}</span>
+                    </div>
+                    <h4 className={styles.spotlightTitle}>{slide.spotlightTitle}</h4>
+                    <span className={styles.spotlightAction}>
+                      <span>Acquire Piece</span>
+                      <FiArrowRight size={13} />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

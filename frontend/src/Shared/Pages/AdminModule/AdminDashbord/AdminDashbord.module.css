@@ -1,0 +1,38 @@
+/* AdminDashbord.module.css — FancyFashion Admin */
+
+.dashboard {
+  min-height: 100vh;
+  background: var(--ff-paper, #fcfbf9);
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+}
+
+.mainContainer {
+  display: flex;
+  margin-top: 72px;
+}
+
+.content {
+  flex: 1;
+  padding: 32px 36px 60px;
+  margin-left: 260px;
+  min-height: calc(100vh - 72px);
+  background: #fcfbf9;
+  overflow-x: hidden;
+}
+
+@media (max-width: 900px) {
+  .content {
+    margin-left: 0;
+    padding: 20px 16px 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .mainContainer {
+    margin-top: 64px;
+  }
+
+  .content {
+    padding: 16px 12px 40px;
+  }
+}

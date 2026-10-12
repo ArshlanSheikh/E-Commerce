@@ -1,351 +1,344 @@
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 16px;
+/* MyOrder.module.css - VIP Client Order Archives & Sartorial Passports */
+
+.ordersPage {
+  background: var(--ff-paper);
+  min-height: 90vh;
+  padding: 60px 0 100px;
 }
 
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* 1. PAGE HEADER */
 .pageHeader {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--ff-border);
+  padding-bottom: 24px;
 }
 
-.pageHeader h2 {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 700;
-  color: #111827;
-}
-
-.pageHeader span {
-  font-size: 13px;
-  color: #6b7280;
-  font-weight: 500;
-}
-
-.orderCard {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 14px;
-  transition: 0.2s ease;
-}
-
-.orderCard:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-}
-
-.orderHeader {
-  padding: 12px 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fafafa;
-  border-bottom: 1px solid #f1f5f9;
-}
-
-.orderHeader h4 {
-  margin: 0;
-  font-size: 14px;
-  color: #111827;
-  font-weight: 700;
-}
-
-.orderHeader p {
-  margin: 3px 0 0;
-  font-size: 11px;
-  color: #6b7280;
-}
-
-.orderMeta {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.badge,
-.paymentBadge {
-  padding: 5px 10px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.paymentBadge {
-  background: #dbeafe;
-  color: #1d4ed8;
-}
-
-.pending {
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.processing {
-  background: #dbeafe;
-  color: #1d4ed8;
-}
-
-.shipped {
-  background: #e0f2fe;
-  color: #0369a1;
-}
-
-.delivered {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.cancelled {
-  background: #fee2e2;
-  color: #b91c1c;
-}
-
-.products {
-  padding: 10px;
-}
-
-.productCard {
-  display: flex;
-  gap: 10px;
-  padding: 8px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.productCard:hover {
-  background: #f9fafb;
-}
-
-.productCard + .productCard {
-  margin-top: 8px;
-}
-
-.productImage {
-  width: 65px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid #f3f4f6;
-}
-
-.productInfo {
-  flex: 1;
-  min-width: 0;
-}
-
-.productInfo h5 {
-  margin: 0;
-  font-size: 13px;
-  font-weight: 600;
-  color: #111827;
-  line-height: 1.4;
-}
-
-.variantRow {
-  display: flex;
-  gap: 10px;
-  margin-top: 4px;
-  font-size: 11px;
-  color: #6b7280;
-}
-
-.productBottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 6px;
-}
-
-.productBottom span {
-  font-size: 11px;
-  color: #6b7280;
-}
-
-.productBottom strong {
-  font-size: 13px;
-  color: #111827;
-}
-
-.summary {
-  display: flex;
-  justify-content: space-around;
-  gap: 10px;
-  padding: 10px 14px;
-  border-top: 1px solid #f3f4f6;
-  border-bottom: 1px solid #f3f4f6;
-  background: #fafafa;
-}
-
-.summary div {
-  text-align: center;
-}
-
-.summary span {
-  display: block;
-  font-size: 11px;
-  color: #6b7280;
-}
-
-.summary strong {
-  display: block;
-  margin-top: 2px;
-  font-size: 13px;
-  color: #111827;
-}
-
-.deliveryInfo {
-  padding: 10px 14px;
-  font-size: 12px;
-  color: #4b5563;
-}
-
-.actions {
-  display: flex;
-  gap: 8px;
-  padding: 10px 14px 14px;
-}
-
-.trackBtn,
-.detailsBtn,
-.cancelBtn {
-  flex: 1;
-  border: none;
-  border-radius: 8px;
-  padding: 9px 12px;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: 0.2s ease;
-}
-
-.trackBtn {
-  background: #2563eb;
-  color: white;
-}
-
-.trackBtn:hover {
-  background: #1d4ed8;
-}
-
-.detailsBtn {
-  background: #111827;
-  color: white;
-}
-
-.detailsBtn:hover {
-  background: #1f2937;
-}
-
-.cancelBtn {
-  background: #dc2626;
-  color: white;
-}
-
-.cancelBtn:hover {
-  background: #b91c1c;
-}
-
-.stateContainer {
-  min-height: 300px;
+.headerLeft {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 6px;
+}
+
+.kicker {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--ff-gold-dark);
+}
+
+.pageTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 3.4vw, 3.4rem);
+  font-weight: 500;
+  color: var(--ff-black);
+  line-height: 1.1;
+}
+
+.pageSubtitle {
+  font-size: 0.95rem;
+  color: var(--ff-text-secondary);
+}
+
+.totalBadge {
+  background: #ffffff;
+  border: 1px solid var(--ff-border);
+  padding: 6px 14px;
+  border-radius: var(--ff-radius-full);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--ff-text);
+  letter-spacing: 0.08em;
+}
+
+/* 2. ORDERS GRID */
+.ordersGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* PASSPORT CARD */
+.orderPassport {
+  background: #ffffff;
+  border: 1px solid var(--ff-border);
+  border-radius: var(--ff-radius-lg);
+  box-shadow: 0 6px 24px -6px rgba(16, 16, 21, 0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--ff-transition-fast);
+}
+
+.orderPassport:hover {
+  border-color: #d1cdc0;
+  box-shadow: 0 12px 36px -8px rgba(16, 16, 21, 0.1);
+}
+
+/* PASSPORT HEADER */
+.passportHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 28px;
+  background: var(--ff-surface-subtle);
+  border-bottom: 1px solid var(--ff-border);
+}
+
+.orderIdent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.orderNumberLabel {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--ff-text-secondary);
+}
+
+.orderNumberLabel strong {
+  color: var(--ff-black);
+}
+
+.orderDate {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--ff-text-muted);
+}
+
+.statusPills {
+  display: flex;
   align-items: center;
   gap: 8px;
-  text-align: center;
 }
 
-.stateContainer h3 {
-  margin: 0;
-  font-size: 18px;
+.statusBadge {
+  padding: 4px 12px;
+  border-radius: var(--ff-radius-full);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: #ffffff;
+  border: 1px solid var(--ff-border);
+  color: var(--ff-text);
 }
 
-.stateContainer p {
-  margin: 0;
-  font-size: 13px;
-  color: #6b7280;
+.statusBadge.delivered {
+  background: #ecfdf5;
+  color: #065f46;
+  border-color: #a7f3d0;
 }
 
-.error {
-  text-align: center;
-  padding: 40px 20px;
-  color: #dc2626;
-  font-size: 14px;
+.statusBadge.pending,
+.statusBadge.processing {
+  background: #fffbeb;
+  color: #92400e;
+  border-color: #fde68a;
+}
+
+.paymentBadge {
+  background: var(--ff-black);
+  color: var(--ff-gold-light);
+  padding: 4px 10px;
+  border-radius: var(--ff-radius-xs);
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+/* ITEMS LIST */
+.itemsList {
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.garmentRow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 12px;
+  border-radius: var(--ff-radius-sm);
+  background: #ffffff;
+  border: 1px solid var(--ff-border-subtle);
+  cursor: pointer;
+  transition: all var(--ff-transition-fast);
+}
+
+.garmentRow:hover {
+  border-color: var(--ff-black);
+  background: var(--ff-surface-subtle);
+}
+
+.garmentThumb {
+  width: 64px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--ff-radius-xs);
+  background: var(--ff-surface-subtle);
+  flex-shrink: 0;
+}
+
+.garmentDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.garmentTitleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.garmentTitleRow h4 {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
   font-weight: 600;
+  color: var(--ff-black);
 }
 
-@media (max-width: 768px) {
-  .container {
-    padding: 10px;
-  }
-
-  .pageHeader h2 {
-    font-size: 18px;
-  }
-
-  .orderHeader {
-    padding: 10px;
-  }
-
-  .orderMeta {
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
-  }
-
-  .productImage {
-    width: 55px;
-    height: 70px;
-  }
-
-  .productInfo h5 {
-    font-size: 12px;
-  }
-
-  .variantRow {
-    font-size: 10px;
-  }
-
-  .summary {
-    padding: 8px;
-  }
-
-  .actions {
-    padding: 10px;
-    gap: 6px;
-  }
-
-  .trackBtn,
-  .detailsBtn,
-  .cancelBtn {
-    font-size: 11px;
-    padding: 8px;
-  }
+.openArrow {
+  color: var(--ff-text-muted);
 }
 
-/* ================= SKELETON SHIMMER ================= */
-.skeletonPulse {
-  background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s ease-in-out infinite;
+.garmentSpecs {
+  font-size: 0.78rem;
+  color: var(--ff-text-muted);
+  display: flex;
+  gap: 6px;
+}
+
+.garmentPrice {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ff-black);
+}
+
+/* PASSPORT FOOTER */
+.passportFooter {
+  padding: 18px 28px;
+  border-top: 1px solid var(--ff-border);
+  background: var(--ff-surface-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shippingDestination {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pinIcon {
+  color: var(--ff-gold-dark);
+}
+
+.destName {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--ff-black);
+}
+
+.destLoc {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--ff-text-muted);
+}
+
+.financialSummary {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.finCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.finLabel {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--ff-text-muted);
+}
+
+.finVal {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ff-text);
+}
+
+.finTotal {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--ff-black);
+}
+
+/* SKELETON */
+.skeletonCard {
+  background: #ffffff;
+  border: 1px solid var(--ff-border);
+  border-radius: var(--ff-radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.skeletonHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.skeletonBody {
+  display: flex;
+  gap: 16px;
+}
+
+.skeletonThumb {
+  width: 65px;
+  height: 85px;
+  border-radius: 4px;
+  background: #f3f1ec;
+}
+
+.skeletonMeta {
+  flex: 1;
 }
 
 .skeletonLine {
-  border-radius: 4px;
-  display: block;
-}
-
-.skeletonBlock {
-  display: inline-block;
+  background: linear-gradient(90deg, #f3f1ec 25%, #e9e6df 50%, #f3f1ec 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 3px;
 }
 
 @keyframes shimmer {
@@ -353,16 +346,236 @@
   100% { background-position: -200% 0; }
 }
 
-/* ================= CARD FADE-IN (staggered reveal) ================= */
-.animatedCard {
-  opacity: 0;
-  transform: translateY(12px);
-  animation: cardFadeIn 0.4s ease forwards;
+/* EMPTY / ERROR */
+.emptyBox,
+.errorBox {
+  background: #ffffff;
+  border: 1px solid var(--ff-border);
+  border-radius: var(--ff-radius-lg);
+  padding: 80px 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 
-@keyframes cardFadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+.emptyIcon {
+  font-size: 2.2rem;
+  color: var(--ff-gold);
+}
+
+.emptyBox h3 {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+}
+
+.emptyBox p {
+  color: var(--ff-text-muted);
+  max-width: 420px;
+}
+
+.exploreBtn,
+.retryBtn {
+  margin-top: 12px;
+  background: var(--ff-black);
+  color: #ffffff;
+  border: none;
+  padding: 12px 26px;
+  border-radius: var(--ff-radius-sm);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .ordersPage {
+    padding: 30px 0 80px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .container {
+    padding: 0 16px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    gap: 20px;
+  }
+
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .pageTitle {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+  }
+
+  .passportHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .statusPills {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .passportFooter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .financialSummary {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .itemsList {
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .garmentRow {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 580px) {
+  .ordersPage {
+    padding: 24px 0 80px;
+  }
+
+  .container {
+    padding: 0 16px;
+    gap: 18px;
+  }
+
+  .pageTitle {
+    font-size: 1.6rem;
+  }
+
+  .statusPills {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .passportHeader {
+    padding: 14px;
+  }
+
+  .itemsList {
+    padding: 12px 10px;
+    gap: 10px;
+  }
+
+  .garmentRow {
+    gap: 10px;
+    padding: 8px;
+  }
+
+  .garmentThumb {
+    width: 52px;
+  }
+
+  .garmentTitleRow h4 {
+    font-size: 0.85rem;
+  }
+
+  .passportFooter {
+    padding: 12px 12px;
+    gap: 12px;
+  }
+
+  .financialSummary {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 0 12px;
+  }
+
+  .pageTitle {
+    font-size: 1.35rem;
+  }
+
+  .kicker {
+    font-size: 0.6rem;
+  }
+
+  .passportHeader {
+    padding: 10px 8px;
+  }
+
+  .orderNumberLabel {
+    font-size: 0.68rem;
+  }
+
+  .statusBadge {
+    padding: 3px 8px;
+    font-size: 0.62rem;
+  }
+
+  .paymentBadge {
+    padding: 3px 6px;
+    font-size: 0.58rem;
+  }
+
+  .itemsList {
+    padding: 10px 6px;
+  }
+
+  .garmentRow {
+    gap: 8px;
+    padding: 6px;
+  }
+
+  .garmentThumb {
+    width: 44px;
+  }
+
+  .garmentTitleRow h4 {
+    font-size: 0.8rem;
+  }
+
+  .garmentPrice {
+    font-size: 0.78rem;
+  }
+
+  .passportFooter {
+    padding: 10px 8px;
+  }
+
+  .destName {
+    font-size: 0.78rem;
+  }
+
+  .destLoc {
+    font-size: 0.7rem;
+  }
+
+  .finTotal {
+    font-size: 1.05rem;
   }
 }
