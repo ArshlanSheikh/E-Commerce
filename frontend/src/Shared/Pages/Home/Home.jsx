@@ -9,6 +9,8 @@ import { FiShield, FiScissors, FiCompass, FiAward } from "react-icons/fi";
 
 const Home = () => {
   return (
+
+    
     <div className={styles.homeContainer}>
       {/* 1. RUNWAY HERO SECTION */}
       <HeroSection />

@@ -94,7 +94,7 @@ const CreateOrder = ({ products = [], onClose }) => {
     };
 
     try {
-      const response = await api.post("/v1/order/create", payload);
+      const response = await api.post("/v1/order/create", payload);  
       if (response.status) {
         alert(response.data?.message || "Order placed successfully");
         return true;

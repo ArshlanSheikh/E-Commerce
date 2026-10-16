@@ -37,10 +37,9 @@ Router.use('/api/v1/user/admin',UserAdminRoutes)
 
 
 // Router.use('/api/v1/admin')
-
-
-
 // http://localhost:5000/
+
+
 
 
 export default Router

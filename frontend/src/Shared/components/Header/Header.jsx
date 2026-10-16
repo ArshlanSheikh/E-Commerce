@@ -28,7 +28,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false); 
   const [showSearch, setShowSearch] = useState(false);
   const [categories, setCategories] = useState([]);
 
